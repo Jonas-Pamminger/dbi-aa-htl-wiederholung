@@ -9,16 +9,16 @@ ON Subject
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into Subject', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into Subject', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in Subject was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in Subject was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in Subject was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in Subject was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -33,16 +33,16 @@ ON Class
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into Class', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into Class', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in Class was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in Class was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in Class was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in Class was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -57,16 +57,16 @@ ON Person
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into Person', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into Person', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in Person was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in Person was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in Person was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in Person was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -82,16 +82,16 @@ ON Competence
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into Competence', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into Competence', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in Competence was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in Competence was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in Competence was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in Competence was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -106,16 +106,16 @@ ON RoomType
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into RoomType', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into RoomType', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in RoomType was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in RoomType was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in RoomType was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in RoomType was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -131,16 +131,16 @@ ON Room
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into Room', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into Room', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in Room was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in Room was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in Room was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in Room was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -156,16 +156,16 @@ ON TestRole
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into TestRole', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into TestRole', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in TestRole was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in TestRole was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in TestRole was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in TestRole was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -181,16 +181,16 @@ ON Test
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into Test', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into Test', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in Test was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in Test was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in Test was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in Test was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
@@ -206,17 +206,18 @@ ON Participant
 BEGIN
     IF
 INSERTING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('INSERT', 'A record was inserted into Participant', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('INSERT', 'A record was inserted into Participant', SYSTIMESTAMP, USER);
     ELSIF
 UPDATING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('UPDATE', 'A record in Participant was updated', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('UPDATE', 'A record in Participant was updated', SYSTIMESTAMP, USER);
     ELSIF
 DELETING THEN
-        INSERT INTO LogTable (event_type, event_description, event_timestamp)
-        VALUES ('DELETE', 'A record in Participant was deleted', SYSTIMESTAMP);
+        INSERT INTO LogTable (event_type, event_description, event_timestamp, db_user)
+        VALUES ('DELETE', 'A record in Participant was deleted', SYSTIMESTAMP, USER);
 END IF;
 END;
 /
+
 
