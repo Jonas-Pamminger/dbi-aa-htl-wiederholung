@@ -1,0 +1,94 @@
+@startuml
+' Exam
+entity Exam {
+  * id: number <<PK>>
+  --
+  * title: varchar2
+  * Exam_date: timestamp
+  --
+  * subject_id: Subject(id) <<FK>>
+  + room_id: Room(id) <<FK>> (nullable)
+}
+
+' Exam_person_Examrole
+entity Exam_Person_ExamRole {
+  * Exam_id: Exam(id) <<FK, PK>>
+  * person_id: Person(id) <<FK, PK>>
+  * Exam_role_id: ExamRole(id) <<FK, PK>>
+  --
+  * score: number (nullable)
+}
+
+Exam ||--o{ Exam_Person_ExamRole
+
+' Examrole
+entity ExamRole {
+  * id: number <<PK>>
+  --
+  * name: varchar2
+}
+
+Exam_Person_ExamRole }o--|| ExamRole
+
+' subject
+entity Subject {
+  * id: number <<PK>>
+  --
+  * name: varchar2
+}
+
+Exam }o--|| Subject
+
+' room
+entity Room {
+  * id: number <<PK>>
+  --
+  * type_id: RoomType(id) <<FK>>
+}
+
+Exam }o--o| Room
+
+' type
+entity RoomType {
+  * id: number <<PK>>
+  --
+  * type: varchar2
+}
+
+Room }o--|| RoomType
+
+' person
+entity Person {
+  * id: number <<PK>>
+  --
+  * firstname: varchar2
+  * lastname: varchar2
+  --
+  + class_id: Class(id) <<FK>> (nullable)
+}
+
+Exam_Person_ExamRole }o--|| Person
+
+' competence
+entity Competence {
+  * id: number <<PK>>
+  --
+  * name: varchar2
+  + subject_id: Subject(id) <<FK>> (nullable)
+}
+
+
+Person }o--o{ Competence
+
+
+' class
+entity Class {
+  * id : number <<PK>>
+  --
+  * name: varchar2
+}
+
+Class |o--|{ Person
+
+Competence }|--o| Subject
+@enduml
