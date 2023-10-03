@@ -805,14 +805,14 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         person_id NUMBER,
         exam_role_id NUMBER
     ) RETURN NUMBER AS
-        participant_id NUMBER;
+        participant_score NUMBER;
     BEGIN
-        -- Verify if a participant with the specified IDs exists
-        SELECT Score
+        -- Fetch the score of the participant with the specified IDs
+        SELECT Score INTO participant_score
         FROM Participant
         WHERE exam_id = exam_id AND person_id = person_id AND exam_role_id = exam_role_id;
 
-        RETURN participant_id;
+        RETURN participant_score;
     END ReadParticipant;
 
     PROCEDURE UpdateParticipant(
