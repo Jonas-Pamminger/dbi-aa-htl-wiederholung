@@ -49,56 +49,68 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     -- Ascend-Class: Erhöhe die Schulstufe der Klasse
     PROCEDURE AscendClass(
         class_id NUMBER,
-        new_class_name VARCHAR2(100)
+        new_class_name VARCHAR2
     );
 
     -- CRUD for Subject
     FUNCTION CreateSubject(
-        name VARCHAR2) RETURN NUMBER;
+        name VARCHAR2
+    ) RETURN NUMBER;
 
     FUNCTION ReadSubject(
-        name VARCHAR2) RETURN NUMBER;
+        name VARCHAR2
+    ) RETURN NUMBER;
 
     PROCEDURE UpdateSubject(
-        name VARCHAR2);
+        old_name VARCHAR2,
+        new_name VARCHAR2
+    );
 
     PROCEDURE DeleteSubject(
-        name VARCHAR2);
+        name VARCHAR2
+    );
 
     -- CRUD for Class
     FUNCTION CreateClass(
         name VARCHAR2,
-        subject_id NUMBER) RETURN NUMBER;
+        subject_id NUMBER
+    ) RETURN NUMBER;
 
     FUNCTION ReadClass(
-        name VARCHAR2) RETURN Number;
+        name VARCHAR2
+    ) RETURN NUMBER;
 
     PROCEDURE UpdateClass(
-        name VARCHAR2,
-        subject_id NUMBER);
+        old_name VARCHAR2,
+        new_name VARCHAR2,
+        subject_id NUMBER
+    );
 
     PROCEDURE DeleteClass(
-        name VARCHAR);
+        name VARCHAR2
+    );
 
     -- CRUD for Person
     FUNCTION CreatePerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        first_name VARCHAR2,
+        last_name VARCHAR2
     ) RETURN NUMBER;
 
     FUNCTION ReadPerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        first_name VARCHAR2,
+        last_name VARCHAR2
     ) RETURN NUMBER;
 
     PROCEDURE UpdatePerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        old_first_name VARCHAR2,
+        old_last_name VARCHAR2,
+        new_first_name VARCHAR2,
+        new_last_name VARCHAR2
     );
 
     PROCEDURE DeletePerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        first_name VARCHAR2,
+        last_name VARCHAR2
     );
 
     -- CRUD for Competence
@@ -106,12 +118,12 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         description VARCHAR2
     ) RETURN NUMBER;
 
-    FUNCTION CreateCompetence(
+    FUNCTION CreateCompetenceWithPerson(
         description VARCHAR2,
         person_id NUMBER
     ) RETURN NUMBER;
 
-    FUNCTION CreateCompetence(
+    FUNCTION CreateCompetenceWithPersonAndSubject(
         description VARCHAR2,
         person_id NUMBER,
         subject_id NUMBER
@@ -122,7 +134,8 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     ) RETURN NUMBER;
 
     PROCEDURE UpdateCompetence(
-        description VARCHAR2,
+        old_description VARCHAR2,
+        new_description VARCHAR2,
         person_id NUMBER,
         subject_id NUMBER
     );
@@ -141,7 +154,8 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     ) RETURN NUMBER;
 
     PROCEDURE UpdateRoomType(
-        room_type VARCHAR2
+        old_room_type VARCHAR2,
+        new_room_type VARCHAR2
     );
 
     PROCEDURE DeleteRoomType(
@@ -154,21 +168,21 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         room_type_id NUMBER
     ) RETURN NUMBER;
 
-    FUNCTION ReadRoom(
+    FUNCTION ReadRoomByDesignation(
         designation VARCHAR2
     ) RETURN NUMBER;
 
-    FUNCTION ReadRoom(
-        room_number NUMBER
+    FUNCTION ReadRoomById(
+        room_id NUMBER
     ) RETURN NUMBER;
 
     PROCEDURE UpdateRoom(
-        room_number NUMBER,
-        room_type_id NUMBER
+        old_room_id NUMBER,
+        new_room_type_id NUMBER
     );
 
     PROCEDURE DeleteRoom(
-        room_number VARCHAR2
+        room_id NUMBER
     );
 
     -- CRUD for ExamRole
@@ -300,9 +314,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     BEGIN
         -- Your logic for finding a replacement examiner goes here
         -- You can use a cursor to return the result
-        OPEN cur FOR
-            -- Your SQL query here;
-            RETURN cur;
+        -- TODO: Implement
     END FindReplacementExaminer;
 
     FUNCTION FindAvailableRoom(
@@ -396,13 +408,14 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END ReadSubject;
 
     PROCEDURE UpdateSubject(
-        name VARCHAR2
+        old_name VARCHAR2,
+        new_name VARCHAR2
     ) AS
     BEGIN
-        -- Update the subject record based on the subject name
+        -- Update the subject record based on the old name and new name
         UPDATE Subject
-        SET name = name
-        WHERE id = ReadSubject(name);
+        SET name = new_name
+        WHERE name = old_name;
     END UpdateSubject;
 
     PROCEDURE DeleteSubject(
@@ -411,7 +424,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     BEGIN
         -- Delete the subject record based on the subject name
         DELETE FROM Subject
-        WHERE id = ReadSubject(name);
+        WHERE name = name;
     END DeleteSubject;
 
     -- CRUD operations for Class
@@ -422,7 +435,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         class_id NUMBER;
     BEGIN
         -- Insert a new class record into the Class table
-        INSERT INTO Class (name, subject_id)
+        INSERT INTO Class (name, id)
         VALUES (name, subject_id)
         RETURNING id INTO class_id;
 
@@ -443,14 +456,15 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END ReadClass;
 
     PROCEDURE UpdateClass(
-        name VARCHAR2,
+        old_name VARCHAR2,
+        new_name VARCHAR2,
         subject_id NUMBER
     ) AS
     BEGIN
-        -- Update the class record based on the class name
+        -- Update the class record based on the old name
         UPDATE Class
-        SET name = name, subject_id = subject_id
-        WHERE id = ReadClass(name);
+        SET name = new_name, id = subject_id
+        WHERE name = old_name;
     END UpdateClass;
 
     PROCEDURE DeleteClass(
@@ -459,57 +473,57 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     BEGIN
         -- Delete the class record based on the class name
         DELETE FROM Class
-        WHERE id = ReadClass(name);
+        WHERE name = name;
     END DeleteClass;
 
     -- CRUD operations for Person
     FUNCTION CreatePerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        first_name VARCHAR2,
+        last_name VARCHAR2
     ) RETURN NUMBER AS
         person_id NUMBER;
     BEGIN
         -- Insert a new person record into the Person table
         INSERT INTO Person (firstname, lastname)
-        VALUES (firstName, lastName)
+        VALUES (first_name, last_name)
         RETURNING id INTO person_id;
 
         RETURN person_id;
     END CreatePerson;
 
     FUNCTION ReadPerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        first_name VARCHAR2,
+        last_name VARCHAR2
     ) RETURN NUMBER AS
         person_id NUMBER;
     BEGIN
         -- Retrieve the person_id based on the first name and last name
         SELECT id INTO person_id
         FROM Person
-        WHERE firstname = firstName AND lastname = lastName;
+        WHERE firstname = first_name AND lastname = last_name;
 
         RETURN person_id;
     END ReadPerson;
 
     PROCEDURE UpdatePerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        first_name VARCHAR2,
+        last_name VARCHAR2
     ) AS
     BEGIN
         -- Update the person record based on the first name and last name
         UPDATE Person
-        SET firstname = firstName, lastname = lastName
-        WHERE id = ReadPerson(firstName, lastName);
+        SET firstname = first_name, lastname = last_name
+        WHERE firstname = first_name AND lastname = last_name;
     END UpdatePerson;
 
     PROCEDURE DeletePerson(
-        firstName VARCHAR2,
-        lastName VARCHAR2
+        first_name VARCHAR2,
+        last_name VARCHAR2
     ) AS
     BEGIN
         -- Delete the person record based on the first name and last name
         DELETE FROM Person
-        WHERE id = ReadPerson(firstName, lastName);
+        WHERE firstname = first_name AND lastname = last_name;
     END DeletePerson;
 
     -- CRUD operations for Competence
@@ -521,6 +535,35 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         -- Insert a new competence record into the Competence table
         INSERT INTO Competence (description)
         VALUES (description)
+        RETURNING id INTO competence_id;
+
+        RETURN competence_id;
+    END CreateCompetence;
+
+    FUNCTION CreateCompetence(
+        description VARCHAR2,
+        person_id NUMBER
+    ) RETURN NUMBER AS
+        competence_id NUMBER;
+    BEGIN
+        -- Insert a new competence record into the Competence table with a person_id
+        INSERT INTO Competence (description, person_id)
+        VALUES (description, person_id)
+        RETURNING id INTO competence_id;
+
+        RETURN competence_id;
+    END CreateCompetence;
+
+    FUNCTION CreateCompetence(
+        description VARCHAR2,
+        person_id NUMBER,
+        subject_id NUMBER
+    ) RETURN NUMBER AS
+        competence_id NUMBER;
+    BEGIN
+        -- Insert a new competence record into the Competence table with person_id and subject_id
+        INSERT INTO Competence (description, person_id, subject_id)
+        VALUES (description, person_id, subject_id)
         RETURNING id INTO competence_id;
 
         RETURN competence_id;
@@ -548,7 +591,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         -- Update the competence record based on the description, person_id, and subject_id
         UPDATE Competence
         SET person_id = person_id, subject_id = subject_id
-        WHERE id = ReadCompetence(description);
+        WHERE description = description;
     END UpdateCompetence;
 
     PROCEDURE DeleteCompetence(
@@ -557,7 +600,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     BEGIN
         -- Delete the competence record based on the description
         DELETE FROM Competence
-        WHERE id = ReadCompetence(description);
+        WHERE description = description;
     END DeleteCompetence;
 
     -- CRUD operations for RoomType
@@ -594,7 +637,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         -- Update the room type record based on the room type
         UPDATE RoomType
         SET room_type = room_type
-        WHERE id = ReadRoomType(room_type);
+        WHERE room_type = room_type;
     END UpdateRoomType;
 
     PROCEDURE DeleteRoomType(
@@ -603,7 +646,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     BEGIN
         -- Delete the room type record based on the room type
         DELETE FROM RoomType
-        WHERE id = ReadRoomType(room_type);
+        WHERE room_type = room_type;
     END DeleteRoomType;
 
     -- CRUD operations for Room
@@ -659,7 +702,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END UpdateRoom;
 
     PROCEDURE DeleteRoom(
-        room_number VARCHAR2
+        room_number NUMBER
     ) AS
     BEGIN
         -- Delete the room record based on the room number
@@ -702,7 +745,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         -- Update the exam role record based on the old and new role names
         UPDATE ExamRole
         SET role = new_role_name
-        WHERE id = ReadExamRole(old_role_name);
+        WHERE role = old_role_name;
     END UpdateExamRole;
 
     PROCEDURE DeleteExamRole(
@@ -711,7 +754,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     BEGIN
         -- Delete the exam role record based on the role name
         DELETE FROM ExamRole
-        WHERE id = ReadExamRole(role_name);
+        WHERE role = role_name;
     END DeleteExamRole;
 
     -- CRUD operations for Exam
@@ -788,7 +831,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         participant_id NUMBER;
     BEGIN
         -- Verify if a participant with the specified IDs exists
-        SELECT id INTO participant_id
+        SELECT Score
         FROM Participant
         WHERE exam_id = exam_id AND person_id = person_id AND exam_role_id = exam_role_id;
 
@@ -805,7 +848,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         -- Update the participant record based on the exam ID, person ID, and exam role ID
         UPDATE Participant
         SET score = score
-        WHERE id = ReadParticipant(exam_id, person_id, exam_role_id);
+        WHERE exam_id = exam_id AND person_id = person_id AND exam_role_id = exam_role_id;
     END UpdateParticipant;
 
     PROCEDURE DeleteParticipant(
@@ -816,7 +859,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     BEGIN
         -- Delete the participant record based on the exam ID, person ID, and exam role ID
         DELETE FROM Participant
-        WHERE id = ReadParticipant(exam_id, person_id, exam_role_id);
+        WHERE exam_id = exam_id AND person_id = person_id AND exam_role_id = exam_role_id;
     END DeleteParticipant;
+
 END exams_manager;
 /

@@ -240,3 +240,5 @@ INSERT INTO administrator.Participant (exam_id, person_id, exam_role_id, score) 
 INSERT INTO administrator.Participant (exam_id, person_id, exam_role_id, score) VALUES (4, 6, 2, NULL);
 INSERT INTO administrator.Participant (exam_id, person_id, exam_role_id, score) VALUES (5, 5, 2, NULL);
 INSERT INTO administrator.Participant (exam_id, person_id, exam_role_id, score) VALUES (5, 6, 2, NULL);
+
+COMMIT;
