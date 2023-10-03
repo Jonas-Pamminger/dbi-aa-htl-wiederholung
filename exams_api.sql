@@ -54,122 +54,121 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     -- CRUD for Subject
     FUNCTION CreateSubject(
-        name Subject.name%TYPE) RETURN Subject.id%TYPE;
+        name VARCHAR2) RETURN NUMBER;
 
     FUNCTION ReadSubject(
-        name Subject.name%TYPE) RETURN Subject.id%TYPE;
+        name VARCHAR2) RETURN NUMBER;
 
     PROCEDURE UpdateSubject(
-        name Subject.name%TYPE);
+        name VARCHAR2);
 
     PROCEDURE DeleteSubject(
-        name Subject.name%TYPE);
+        name VARCHAR2);
 
     -- CRUD for Class
     FUNCTION CreateClass(
-        name Class.name%TYPE,
-        subject_id Class.subject_id%TYPE) RETURN NUMBER;
+        name VARCHAR2,
+        subject_id NUMBER) RETURN NUMBER;
 
     FUNCTION ReadClass(
-        name Class.name%TYPE) RETURN Number;
+        name VARCHAR2) RETURN Number;
 
     PROCEDURE UpdateClass(
-        name Class.name%TYPE,
-        subject_id Class.subject_id%TYPE);
+        name VARCHAR2,
+        subject_id NUMBER);
 
     PROCEDURE DeleteClass(
-        name Class.name%TYPE);
+        name VARCHAR);
 
     -- CRUD for Person
     FUNCTION CreatePerson(
-        name Person.name%TYPE,
-        firstName Person.firstname%TYPE,
-        lastName Person.lastname%TYPE
-    ) RETURN Person.id%TYPE;
+        firstName VARCHAR2,
+        lastName VARCHAR2
+    ) RETURN NUMBER;
 
     FUNCTION ReadPerson(
-        firstName Person.firstname%TYPE,
-        lastName Person.lastname%TYPE
-    ) RETURN Person.id%TYPE;
+        firstName VARCHAR2,
+        lastName VARCHAR2
+    ) RETURN NUMBER;
 
     PROCEDURE UpdatePerson(
-        name Person.name%TYPE,
-        firstName Person.firstname%TYPE,
-        lastName Person.lastname%TYPE
+        firstName VARCHAR2,
+        lastName VARCHAR2
     );
 
     PROCEDURE DeletePerson(
-        name Person.name%TYPE
+        firstName VARCHAR2,
+        lastName VARCHAR2
     );
 
     -- CRUD for Competence
     FUNCTION CreateCompetence(
-        description Competence.description%TYPE
-    ) RETURN Competence.id%TYPE;
+        description VARCHAR2
+    ) RETURN NUMBER;
 
     FUNCTION CreateCompetence(
-        description Competence.description%TYPE,
-        person_id Competence.person_id%TYPE
-    ) RETURN Competence.id%TYPE;
+        description VARCHAR2,
+        person_id NUMBER
+    ) RETURN NUMBER;
 
     FUNCTION CreateCompetence(
-        description Competence.description%TYPE,
-        person_id Competence.person_id%TYPE,
-        subject_id Competence.subject_id%TYPE
-    ) RETURN Competence.id%TYPE;
+        description VARCHAR2,
+        person_id NUMBER,
+        subject_id NUMBER
+    ) RETURN NUMBER;
 
     FUNCTION ReadCompetence(
-        description Competence.description%TYPE
-    ) RETURN Competence.id%TYPE;
+        description VARCHAR2
+    ) RETURN NUMBER;
 
     PROCEDURE UpdateCompetence(
-        description Competence.description%TYPE,
-        person_id Competence.person_id%TYPE,
-        subject_id Competence.subject_id%TYPE
+        description VARCHAR2,
+        person_id NUMBER,
+        subject_id NUMBER
     );
 
     PROCEDURE DeleteCompetence(
-        description Competence.description%TYPE
+        description VARCHAR2
     );
 
     -- CRUD for RoomType
     FUNCTION CreateRoomType(
-        room_type RoomType.room_type%TYPE
-    ) RETURN RoomType.id%TYPE;
+        room_type VARCHAR2
+    ) RETURN NUMBER;
 
     FUNCTION ReadRoomType(
-        room_type RoomType.room_type%TYPE
-    ) RETURN RoomType.id%TYPE;
+        room_type VARCHAR2
+    ) RETURN NUMBER;
 
     PROCEDURE UpdateRoomType(
-        room_type RoomType.room_type%TYPE
+        room_type VARCHAR2
     );
 
     PROCEDURE DeleteRoomType(
-        room_type RoomType.room_type%TYPE
+        room_type VARCHAR2
     );
 
     -- CRUD for Room
     FUNCTION CreateRoom(
-        designation Room.designation%TYPE,
-        room_type_id Room.type_id%TYPE
-    ) RETURN Room.id%TYPE;
+        designation VARCHAR2,
+        room_type_id NUMBER
+    ) RETURN NUMBER;
 
     FUNCTION ReadRoom(
-        designation Room.designation%TYPE
-    ) RETURN Room.id%TYPE;
+        designation VARCHAR2
+    ) RETURN NUMBER;
 
     FUNCTION ReadRoom(
-        room_number Room.id%TYPE
-    ) RETURN Room.id%TYPE;
+        room_number NUMBER
+    ) RETURN NUMBER;
 
     PROCEDURE UpdateRoom(
-        room_number Room.room_number%TYPE,
-        room_type_id Room.room_type_id%TYPE
+        room_number NUMBER,
+        room_type_id NUMBER
     );
 
     PROCEDURE DeleteRoom(
-        room_number Room.designation%TYPE
+        room_number VARCHAR2
     );
 
     -- CRUD for ExamRole
@@ -240,6 +239,8 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         person_id NUMBER,
         exam_role_id NUMBER
     );
+
+    
 
 END exams_manager;
 /
