@@ -1,8 +1,8 @@
-DROP USER administrator CASCADE;
+DROP USER organisation CASCADE;
 DROP USER teacher CASCADE;
 DROP USER student CASCADE;
 
-DROP ROLE admin_role;
+DROP ROLE organisation_role;
 DROP ROLE teacher_role;
 DROP ROLE student_role;
 
@@ -25,3 +25,5 @@ BEGIN
 	    END;
     END LOOP;
 END;
+
+COMMIT;
