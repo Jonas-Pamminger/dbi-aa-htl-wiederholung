@@ -7,6 +7,7 @@ DROP TABLE Competence;
 DROP TABLE Person;
 DROP TABLE Class;
 DROP TABLE Subject;
+DROP TABLE LogTable;
 
 CREATE TABLE Subject
 (
