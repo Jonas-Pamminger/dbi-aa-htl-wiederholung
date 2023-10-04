@@ -4,7 +4,7 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         exam_id Exam.id%TYPE,
         class_Id Class.id%type DEFAULT NULL,
         person_id Person.id%type DEFAULT NULL,
-       exam_role_id ExamRole.id%type DEFAULT NULL
+        exam_role_id ExamRole.id%type DEFAULT NULL
     );
 
     -- Find-Replacement: Bei Verhinderung des vorherigen Prüfers wird ein Ersatz-Prüfer mit den nötigen Kompetenzen gesucht, und falls verfügbar, eingetragen
@@ -15,7 +15,7 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     -- Find-Available-Room: Finde einen Raum mit einer entsprechenden Raumart
     FUNCTION FindAvailableRoom(
         room_type RoomType.id%type,
-        exam_date Exam.exam_date%type 
+        exam_date Exam.exam_date%type
     ) RETURN NUMBER;
 
     -- Grade-Student: Trage für einen Schüler eine Note ein
@@ -31,15 +31,32 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     ) RETURN NUMBER;
 
     -- Print-Test-Results: Drucke die Ergebnisse eines Tests
-    PROCEDURE PrintTestResults(
+    FUNCTION GetTestResults(
         exam_id Exam.id%TYPE
-    );
+    ) Return TestResultType;
 
     -- Print-Test-Results-For-Class-And-Subject: Drucke die Ergebnisse eines Tests für eine Klasse und ein Fach
-    PROCEDURE PrintTestResultsForClassAndSubject(
+    FUNCTION GetAverageTestResultsForSupjectsAndClass(
         class_name Class.name%type,
         subject_name Subject.name%type
-    );
+    ) RETURN TestResultType;
+
+    FUNCTION GetTestParticipantsAndRoles(
+        examTitle Exam.TITLE%TYPE
+    ) RETURN PersonRoleType;
+
+    FUNCTION GetAllTestForSubject(
+        subject_name Subject.name%type
+    ) RETURN EXAM%rowtype;
+
+    FUNCTION FindSupervisorForTest(
+        exam_id Exam.id%TYPE
+    ) RETURN PersonWithID;
+
+    FUNCTION GetSuccessRateForClassAndTest(
+        class_name Class.name%type,
+        subject_name Subject.name%type
+    ) RETURN NUMBER;
 
     -- Reserve-Room: Trage zum Test einen Raum ein, falls frei
     PROCEDURE ReserveRoom(
@@ -55,7 +72,7 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     FUNCTION CreateExam(
         title Exam.title%type,
-        exam_date Exam.exam_date%type ,
+        exam_date Exam.exam_date%type,
         examiner_id Person.id%type DEFAULT NULL,
         subject_id Subject.id%type,
         class_Id Class.id%type DEFAULT NULL
@@ -284,18 +301,18 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         Select *
         into new_examiner
         from PERSON
-        where id =(SELECT pe.id
-        FROM Exam t
-                 JOIN Competence c ON t.subject_id = c.subject_id
-                 JOIN Person pe ON c.person_id = pe.id
-        WHERE t.id = exam_id);
+        where id = (SELECT pe.id
+                    FROM Exam t
+                             JOIN Competence c ON t.subject_id = c.subject_id
+                             JOIN Person pe ON c.person_id = pe.id
+                    WHERE t.id = exam_id);
 
         RETURN new_examiner;
     END FindReplacementExaminer;
 
     FUNCTION FindAvailableRoom(
         room_type RoomType.id%type,
-        exam_date Exam.exam_date%type 
+        exam_date Exam.exam_date%type
     ) RETURN NUMBER AS
         room_id Room.id%type;
     BEGIN
@@ -306,8 +323,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE NOT EXISTS (SELECT 1
                           FROM Exam t
                           WHERE t.room_id = r.id
-                            AND t.exam_date >= exam_date  -- Use the parameter directly, no need to use TO_DATE
-                            AND t.exam_date < exam_date  + INTERVAL '1' DAY);
+                            AND t.exam_date >= exam_date -- Use the parameter directly, no need to use TO_DATE
+                            AND t.exam_date < exam_date + INTERVAL '1' DAY);
 
         RETURN room_id;
     END FindAvailableRoom;
@@ -330,7 +347,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     ) RETURN NUMBER AS
         avg_score NUMBER;
     BEGIN
-        SELECT Round(AVG(p.score), 2) INTO avg_score
+        SELECT Round(AVG(p.score), 2)
+        INTO avg_score
         FROM Participant p
                  JOIN Exam t ON p.exam_id = t.id
                  JOIN Person pe ON p.person_id = pe.id
@@ -340,80 +358,131 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN 0;
     END CalculateGradeAverage;
 
-    PROCEDURE PrintTestResults(
+    FUNCTION GetTestResults(
         exam_id Exam.id%TYPE
-    ) AS
-        -- Declare a cursor to fetch the query results
-        CURSOR test_results_cursor IS
-            SELECT pe.firstname || ' ' || pe.lastname AS Schüler, p.score AS Note
-            FROM Participant p
-                     JOIN Exam t ON p.exam_id = t.id
-                     JOIN Person pe ON p.person_id = pe.id
-            WHERE t.id = exam_id -- Use the parameter exam_id
-              AND p.score IS NOT NULL;
-
-        -- Declare variables to hold query results
-        v_schüler VARCHAR2(100);
-        v_note NUMBER;
-
+    ) RETURN TestResultType AS
+        testResult TestResultType;
     BEGIN
-        dbms_output.PUT_LINE('Test Results');
-        dbms_output.PUT_LINE('------------');
+        SELECT TestResultType(pe.firstname, pe.lastname, p.score)
+        INTO testResult
+        FROM Participant p
+                 JOIN Exam t ON p.exam_id = t.id
+                 JOIN Person pe ON p.person_id = pe.id
+        WHERE t.id = exam_id
+          AND p.score IS NOT NULL;
 
-        -- Open the cursor
-        OPEN test_results_cursor;
+        RETURN testResult; -- Add this line to return the TestResultType object.
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL; -- Handle the case where no data is found gracefully.
+    END GetTestResults;
 
-        -- Fetch and print each row from the cursor
-        LOOP
-            FETCH test_results_cursor INTO v_schüler, v_note;
-            EXIT WHEN test_results_cursor%NOTFOUND;
-            dbms_output.PUT_LINE(v_schüler || ': ' || v_note);
-        END LOOP;
 
-        -- Close the cursor
-        CLOSE test_results_cursor;
-
-    END PrintTestResults;
-
-    PROCEDURE PrintTestResultsForClassAndSubject(
+    FUNCTION GetAverageTestResultsForSupjectsAndClass(
         class_name Class.name%type,
         subject_name Subject.name%type
-    ) AS
-        -- Declare a cursor to fetch the query results
-        CURSOR avg_scores_cursor IS
-            SELECT P2.FIRSTNAME || ' ' || P2.LASTNAME AS Schüler, AVG(p.score) AS Durchschnittsnote
-            FROM Participant p
-                     JOIN PERSON P2 ON p.PERSON_ID = P2.ID
-                     JOIN CLASS C2 ON P2.CLASS_ID = C2.ID
-                     JOIN Exam T ON T.ID = p.exam_id
-                     JOIN SUBJECT S2 ON T.SUBJECT_ID = S2.ID
-            WHERE C2.NAME = class_name AND S2.NAME = subject_name
-            GROUP BY P2.FIRSTNAME, P2.LASTNAME;
-
-        -- Declare variables to hold query results
-        v_schüler VARCHAR2(100);
-        v_durchschnittsnote NUMBER;
-
+    ) RETURN TestResultType AS
+        testResult TestResultType;
     BEGIN
-        dbms_output.PUT_LINE('Average Scores');
-        dbms_output.PUT_LINE('--------------');
+        SELECT TestResultType(P2.FIRSTNAME, P2.LASTNAME, AVG(p.score))
+        INTO testResult
+        FROM Participant p
+                 JOIN PERSON P2 ON p.PERSON_ID = P2.ID
+                 JOIN CLASS C2 ON P2.CLASS_ID = C2.ID
+                 JOIN Exam T ON T.ID = p.exam_id
+                 JOIN SUBJECT S2 ON T.SUBJECT_ID = S2.ID
+        WHERE C2.NAME = class_name
+          AND S2.NAME = subject_name
+        GROUP BY P2.FIRSTNAME, P2.LASTNAME;
 
-        -- Open the cursor
-        OPEN avg_scores_cursor;
+        return testResult;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL; -- Handle the case where no data is found gracefully.
+    END GetAverageTestResultsForSupjectsAndClass;
 
-        -- Fetch and print each row from the cursor
-        LOOP
-            FETCH avg_scores_cursor INTO v_schüler, v_durchschnittsnote;
-            EXIT WHEN avg_scores_cursor%NOTFOUND;
-            dbms_output.PUT_LINE(v_schüler || ': ' || v_durchschnittsnote);
-        END LOOP;
+    FUNCTION GetTestParticipantsAndRoles(
+        examTitle Exam.TITLE%TYPE
+    ) RETURN PersonRoleType AS
+        testResult PersonRoleType;
+    BEGIN
+        SELECT PersonRoleType(pe.firstname, pe.lastname, tr.role)
+        INTO testResult
+        FROM Participant p
+                 JOIN Exam t ON p.exam_id = t.id
+                 JOIN Person pe ON p.person_id = pe.id
+                 JOIN EXAMROLE tr ON p.EXAM_ROLE_ID = tr.id
+        WHERE t.title = examTitle;
+        return testResult;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL;
+    END GetTestParticipantsAndRoles;
 
-        -- Close the cursor
-        CLOSE avg_scores_cursor;
+    FUNCTION GetAllTestForSubject(subject_name Subject.name%type) RETURN EXAM%rowtype IS
+        exam_row EXAM%rowtype;
+    BEGIN
+        SELECT *
+        INTO exam_row
+        FROM Exam
+        WHERE subject_id = (SELECT id FROM Subject WHERE name = subject_name);
 
-    END PrintTestResultsForClassAndSubject;
+        RETURN exam_row;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL; -- Handle the case when no data is found for the subject.
+    END GetAllTestForSubject;
 
-    PROCEDURE ReserveRoom(
+    FUNCTION FindSupervisorForTest(exam_id Exam.id%TYPE) RETURN PersonWithID IS
+        supervisor PersonWithID;
+    BEGIN
+        SELECT PersonWithID(pe.firstname, pe.lastname, pe.id)
+        INTO supervisor
+        FROM Exam t
+                 JOIN Competence c ON t.subject_id = c.subject_id
+                 JOIN Person pe ON c.person_id = pe.id
+        WHERE t.id = exam_id;
+
+        RETURN supervisor;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL; -- Handle the case when no supervisor is found for the test.
+    END FindSupervisorForTest;
+
+    FUNCTION GetSuccessRateForClassAndTest(
+        class_name Class.name%type,
+        subject_name Subject.name%type
+    ) RETURN NUMBER IS
+        success_rate NUMBER;
+    BEGIN
+        SELECT Round(AVG(p.score), 2)
+        INTO success_rate
+        FROM Participant p
+                 JOIN Exam T ON T.ID = p.exam_id
+                 JOIN SUBJECT S2 ON S2.ID = T.SUBJECT_ID
+                 JOIN PERSON P2 ON p.PERSON_ID = P2.ID
+                 JOIN CLASS C2 ON P2.CLASS_ID = C2.ID
+        WHERE s2.NAME =  subject_name AND C2.NAME = class_name;
+
+        RETURN success_rate;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL; -- Handle the case when no data is found for the specified class and test.
+    END GetSuccessRateForClassAndTest;
+
+    FUNCTION GetAllTestForSupject(
+        subject_name Subject.name%type
+    ) RETURN EXAM%ROWTYPE AS
+        exams EXAM%ROWTYPE;
+    BEGIN
+        SELECT * INTO exams
+        FROM Exam
+        WHERE subject_id = (SELECT id FROM Subject WHERE name = subject_name);
+    End GetAllTestForSupject;
+
+
+    PROCEDURE
+        ReserveRoom(
         exam_id Exam.id%TYPE,
         room_id Room.id%type
     ) AS
@@ -424,7 +493,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE id = exam_id;
     END ReserveRoom;
 
-    PROCEDURE AscendClass(
+    PROCEDURE
+        AscendClass(
         class_Id Class.id%type,
         new_class_name Class.name%type
     ) AS
@@ -435,18 +505,20 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE id = class_id;
     END AscendClass;
 
-    FUNCTION CreateExam(
+    FUNCTION
+        CreateExam(
         title Exam.title%type,
-        exam_date Exam.exam_date%type ,
+        exam_date Exam.exam_date%type,
         examiner_id Person.id%type DEFAULT NULL,
         subject_id Subject.id%type,
         class_Id Class.id%type DEFAULT NULL
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         exam_id Exam.id%TYPE;
     BEGIN
         -- Insert the test record into the Exam table
         INSERT INTO Exam (title, exam_date, subject_id)
-        VALUES (title, exam_date , subject_id)
+        VALUES (title, exam_date, subject_id)
         RETURNING id INTO exam_id;
 
         -- If an examiner_id is provided, add the examiner as a participant
@@ -466,9 +538,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     -- CRUD operations for Subject, Class, Person, Competence, RoomType, Room, ExamRole, Exam, and Participant go here
 
     -- CRUD operations for Subject
-    FUNCTION CreateSubject(
+    FUNCTION
+        CreateSubject(
         name VARCHAR2
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         subject_id Subject.id%type;
     BEGIN
         -- Insert a new subject record into the Subject table
@@ -479,9 +553,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN subject_id;
     END CreateSubject;
 
-    FUNCTION ReadSubject(
+    FUNCTION
+        ReadSubject(
         name VARCHAR2
-    ) RETURN SUBJECT%ROWTYPE AS
+    )
+        RETURN SUBJECT % ROWTYPE AS
         subject_record SUBJECT%ROWTYPE;
     BEGIN
         -- Retrieve the subject record based on the subject name
@@ -494,7 +570,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END ReadSubject;
 
 
-    PROCEDURE UpdateSubject(
+    PROCEDURE
+        UpdateSubject(
         old_name VARCHAR2,
         new_name VARCHAR2
     ) AS
@@ -505,7 +582,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE name = old_name;
     END UpdateSubject;
 
-    PROCEDURE DeleteSubject(
+    PROCEDURE
+        DeleteSubject(
         name VARCHAR2
     ) AS
     BEGIN
@@ -516,10 +594,12 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeleteSubject;
 
     -- CRUD operations for Class
-    FUNCTION CreateClass(
+    FUNCTION
+        CreateClass(
         name VARCHAR2,
         subject_id Subject.id%type
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         class_Id Class.id%type;
     BEGIN
         -- Insert a new class record into the Class table
@@ -530,9 +610,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN class_id;
     END CreateClass;
 
-    FUNCTION ReadClass(
+    FUNCTION
+        ReadClass(
         name VARCHAR2
-    ) RETURN CLASS%rowtype AS
+    )
+        RETURN CLASS % rowtype AS
         class_record CLASS%rowtype;
     BEGIN
         -- Retrieve the class_id based on the class name
@@ -544,7 +626,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN class_record;
     END ReadClass;
 
-    PROCEDURE UpdateClass(
+    PROCEDURE
+        UpdateClass(
         old_name VARCHAR2,
         new_name VARCHAR2,
         subject_id Subject.id%type
@@ -557,7 +640,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE name = old_name;
     END UpdateClass;
 
-    PROCEDURE DeleteClass(
+    PROCEDURE
+        DeleteClass(
         name VARCHAR2
     ) AS
     BEGIN
@@ -568,10 +652,12 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeleteClass;
 
     -- CRUD operations for Person
-    FUNCTION CreatePerson(
+    FUNCTION
+        CreatePerson(
         first_name VARCHAR2,
         last_name VARCHAR2
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         person_id Person.id%type;
     BEGIN
         -- Insert a new person record into the Person table
@@ -582,10 +668,12 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN person_id;
     END CreatePerson;
 
-    FUNCTION ReadPerson(
+    FUNCTION
+        ReadPerson(
         first_name VARCHAR2,
         last_name VARCHAR2
-    ) RETURN PERSON%rowtype AS
+    )
+        RETURN PERSON % rowtype AS
         person_record PERSON%rowtype;
     BEGIN
         -- Retrieve the person_id based on the first name and last name
@@ -598,7 +686,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN person_record;
     END ReadPerson;
 
-    PROCEDURE UpdatePerson(
+    PROCEDURE
+        UpdatePerson(
         old_first_name VARCHAR2,
         old_last_name VARCHAR2,
         new_first_name VARCHAR2,
@@ -613,7 +702,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
           AND lastname = old_last_name;
     END UpdatePerson;
 
-    PROCEDURE DeletePerson(
+    PROCEDURE
+        DeletePerson(
         first_name VARCHAR2,
         last_name VARCHAR2
     ) AS
@@ -626,9 +716,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeletePerson;
 
     -- CRUD operations for Competence
-    FUNCTION CreateCompetence(
+    FUNCTION
+        CreateCompetence(
         description VARCHAR2
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         competence_id NUMBER;
     BEGIN
         -- Insert a new competence record into the Competence table
@@ -639,10 +731,12 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN competence_id;
     END CreateCompetence;
 
-    FUNCTION CreateCompetenceWithPerson(
+    FUNCTION
+        CreateCompetenceWithPerson(
         description VARCHAR2,
         person_id Person.id%type
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         competence_id NUMBER;
     BEGIN
         -- Insert a new competence record into the Competence table with a person_id
@@ -653,11 +747,13 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN competence_id;
     END CreateCompetenceWithPerson;
 
-    FUNCTION CREATECOMPETENCEWITHPERSONANDSUBJECT(
+    FUNCTION
+        CREATECOMPETENCEWITHPERSONANDSUBJECT(
         description VARCHAR2,
         person_id Person.id%type,
         subject_id Subject.id%type
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         competence_id NUMBER;
     BEGIN
         -- Insert a new competence record into the Competence table with person_id and subject_id
@@ -668,9 +764,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN competence_id;
     END CREATECOMPETENCEWITHPERSONANDSUBJECT;
 
-    FUNCTION ReadCompetence(
+    FUNCTION
+        ReadCompetence(
         description VARCHAR2
-    ) RETURN COMPETENCE%rowtype AS
+    )
+        RETURN COMPETENCE % rowtype AS
         competence_record COMPETENCE%rowtype;
     BEGIN
         -- Retrieve the competence_id based on the description
@@ -682,7 +780,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN competence_record;
     END ReadCompetence;
 
-    PROCEDURE UpdateCompetence(
+    PROCEDURE
+        UpdateCompetence(
         old_description VARCHAR2,
         new_description VARCHAR2,
         person_id Person.id%type,
@@ -697,7 +796,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE description = old_description;
     END UpdateCompetence;
 
-    PROCEDURE DeleteCompetence(
+    PROCEDURE
+        DeleteCompetence(
         description VARCHAR2
     ) AS
     BEGIN
@@ -708,9 +808,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeleteCompetence;
 
     -- CRUD operations for RoomType
-    FUNCTION CreateRoomType(
+    FUNCTION
+        CreateRoomType(
         room_type RoomType.id%type
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         room_type_id NUMBER;
     BEGIN
         -- Insert a new room type record into the RoomType table
@@ -721,7 +823,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN room_type_id;
     END CreateRoomType;
 
-    PROCEDURE UpdateRoomType(
+    PROCEDURE
+        UpdateRoomType(
         old_room_type RoomType.id%type,
         new_room_type RoomType.id%type
     ) AS
@@ -732,7 +835,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE room_type = old_room_type;
     END UpdateRoomType;
 
-    PROCEDURE DeleteRoomType(
+    PROCEDURE
+        DeleteRoomType(
         room_type RoomType.id%type
     ) AS
     BEGIN
@@ -743,10 +847,12 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeleteRoomType;
 
     -- CRUD operations for Room
-    FUNCTION CreateRoom(
+    FUNCTION
+        CreateRoom(
         designation VARCHAR2,
         room_type_id NUMBER
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         room_id Room.id%type;
     BEGIN
         -- Insert a new room record into the Room table
@@ -757,9 +863,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN room_id;
     END CreateRoom;
 
-    FUNCTION READROOMBYDESIGNATION(
+    FUNCTION
+        READROOMBYDESIGNATION(
         designation VARCHAR2
-    ) RETURN ROOM%rowtype AS
+    )
+        RETURN ROOM % rowtype AS
         room_record ROOM%rowtype;
     BEGIN
         -- Retrieve the room_id based on the designation
@@ -771,7 +879,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN room_record;
     END READROOMBYDESIGNATION;
 
-    PROCEDURE UpdateRoom(
+    PROCEDURE
+        UpdateRoom(
         old_room_id Room.id%type,
         new_room_type_id NUMBER
     ) AS
@@ -782,7 +891,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE id = old_room_id;
     END UpdateRoom;
 
-    PROCEDURE DeleteRoom(
+    PROCEDURE
+        DeleteRoom(
         room_id Room.id%type
     ) AS
     BEGIN
@@ -793,9 +903,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeleteRoom;
 
     -- CRUD operations for ExamRole
-    FUNCTION CreateExamRole(
+    FUNCTION
+        CreateExamRole(
         role_name VARCHAR2
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         role_id NUMBER;
     BEGIN
         -- Insert a new exam role record into the ExamRole table
@@ -806,9 +918,11 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN role_id;
     END CreateExamRole;
 
-    FUNCTION ReadExamRole(
+    FUNCTION
+        ReadExamRole(
         role_name VARCHAR2
-    ) RETURN EXAMROLE%rowtype AS
+    )
+        RETURN EXAMROLE % rowtype AS
         role_record EXAMROLE%rowtype;
     BEGIN
         -- Retrieve the role_id based on the role name
@@ -820,7 +934,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN role_record;
     END ReadExamRole;
 
-    PROCEDURE UpdateExamRole(
+    PROCEDURE
+        UpdateExamRole(
         old_role_name VARCHAR2,
         new_role_name VARCHAR2
     ) AS
@@ -831,7 +946,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE role = old_role_name;
     END UpdateExamRole;
 
-    PROCEDURE DeleteExamRole(
+    PROCEDURE
+        DeleteExamRole(
         role_name VARCHAR2
     ) AS
     BEGIN
@@ -842,12 +958,14 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeleteExamRole;
 
     -- CRUD operations for Exam
-    FUNCTION CreateExam(
+    FUNCTION
+        CreateExam(
         title Exam.title%type,
         exam_date TIMESTAMP,
         subject_id Subject.id%type,
         room_id Room.id%type DEFAULT NULL
-    ) RETURN NUMBER AS
+    )
+        RETURN NUMBER AS
         exam_id NUMBER;
     BEGIN
         -- Insert a new exam record into the Exam table
@@ -858,7 +976,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN exam_id;
     END CreateExam;
 
-    PROCEDURE UpdateExam(
+    PROCEDURE
+        UpdateExam(
         exam_id NUMBER,
         title Exam.title%type,
         exam_date TIMESTAMP,
@@ -875,7 +994,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE id = exam_id;
     END UpdateExam;
 
-    PROCEDURE DeleteExam(
+    PROCEDURE
+        DeleteExam(
         exam_id NUMBER
     ) AS
     BEGIN
@@ -886,7 +1006,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END DeleteExam;
 
     -- CRUD operations for Participant
-    PROCEDURE CreateParticipant(
+    PROCEDURE
+        CreateParticipant(
         exam_id NUMBER,
         person_id Person.id%type,
         exam_role_id NUMBER,
@@ -898,11 +1019,13 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         VALUES (exam_id, person_id, exam_role_id, score);
     END CreateParticipant;
 
-    FUNCTION ReadParticipant(
+    FUNCTION
+        ReadParticipant(
         exam_id NUMBER,
         person_id Person.id%type,
         exam_role_id NUMBER
-    ) RETURN PARTICIPANT%rowtype AS
+    )
+        RETURN PARTICIPANT % rowtype AS
         participant_record PARTICIPANT%rowtype;
     BEGIN
         -- Fetch the score of the participant with the specified IDs
@@ -916,7 +1039,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         RETURN participant_record;
     END ReadParticipant;
 
-    PROCEDURE UpdateParticipant(
+    PROCEDURE
+        UpdateParticipant(
         exam_id NUMBER,
         person_id Person.id%type,
         exam_role_id NUMBER,
@@ -931,7 +1055,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
           AND exam_role_id = exam_role_id;
     END UpdateParticipant;
 
-    PROCEDURE DeleteParticipant(
+    PROCEDURE
+        DeleteParticipant(
         exam_id NUMBER,
         person_id Person.id%type,
         exam_role_id NUMBER
@@ -945,5 +1070,4 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
           AND p.exam_role_id = exam_role_id;
     END DeleteParticipant;
 
-END exams_manager;
-/
+END exams_manager; /
