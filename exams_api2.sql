@@ -1,19 +1,15 @@
-DROP PACKAGE exams_manager;
-
 CREATE OR REPLACE PACKAGE exams_manager AS
     FUNCTION CreateExam(
         title VARCHAR2,
         exam_date TIMESTAMP,
-        examiner VARCHAR2 DEFAULT NULL,
-        subject VARCHAR2,
-        class VARCHAR2 DEFAULT NULL
+        examiner_name VARCHAR2 DEFAULT NULL,
+        subject_name VARCHAR2
     ) RETURN NUMBER;
 
-    PROCEDURE AddParticipants(
+    PROCEDURE AddParticipant(
         exam_id NUMBER,
-        class VARCHAR2 DEFAULT NULL,
-        person VARCHAR2 DEFAULT NULL,
-        exam_role_id NUMBER DEFAULT NULL
+        person_name VARCHAR2 DEFAULT NULL,
+        exam_role VARCHAR2 DEFAULT 'Schüler'
     );
 
     FUNCTION FindReplacementExaminer(
@@ -51,73 +47,46 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     FUNCTION CreateExam(
     title VARCHAR2,
     exam_date TIMESTAMP,
-    examiner VARCHAR2 DEFAULT NULL,
-    subject VARCHAR2,
-    class VARCHAR2 DEFAULT NULL
+    examiner_name VARCHAR2 DEFAULT NULL,
+    subject_name VARCHAR2
 ) RETURN NUMBER AS
     new_id NUMBER;
     examiner_id NUMBER;
-    class_id NUMBER;
 BEGIN
-    -- Resolve examiner_id based on examiner_name if provided
-    IF examiner IS NOT NULL THEN
+    IF examiner_name IS NOT NULL THEN
         SELECT id INTO examiner_id
         FROM organisation.Person
-        WHERE (firstname || ' ' || lastname) = examiner;
+        WHERE (firstname || ' ' || lastname) = examiner_name;
     ELSE
-        examiner_id := NULL; -- Set examiner_id to NULL if examiner is not provided
-    END IF;
-
-    -- Resolve class_id based on class_name if provided
-    IF class IS NOT NULL THEN
-        SELECT id INTO class_id
-        FROM organisation.Class
-        WHERE name = class;
-    ELSE
-        class_id := NULL; -- Set class_id to NULL if class_name is not provided
+        examiner_id := NULL;
     END IF;
 
     INSERT INTO organisation.Exam (title, exam_date, subject_id, room_id)
-    VALUES (title, exam_date, (SELECT id FROM organisation.Subject WHERE name = subject), NULL)
+    VALUES (title, exam_date, (SELECT id FROM organisation.Subject WHERE name = subject_name), NULL)
     RETURNING id INTO new_id;
 
-    -- If an examiner_id is provided, add the examiner as a organisation.Participant
     IF examiner_id IS NOT NULL THEN
-        AddParticipants(new_id, NULL, examiner_id, NULL);
+        AddParticipant(new_id, examiner_name);
     END IF;
 
-    -- If a class_id is provided, add the organisation.Class as a organisation.Participant
-    IF class_id IS NOT NULL THEN
-        AddParticipants(new_id, class_id, NULL, NULL);
-    END IF;
-
-        -- Return the test_id
-        RETURN new_id;
+    RETURN new_id;
     END CreateExam;
 
-    PROCEDURE AddParticipants(
+    PROCEDURE AddParticipant(
         exam_id NUMBER,
-        class VARCHAR2 DEFAULT NULL,
-        person VARCHAR2 DEFAULT NULL,
-        exam_role_id NUMBER DEFAULT NULL
+        person_name VARCHAR2 DEFAULT NULL,
+        exam_role VARCHAR2 DEFAULT 'Schüler'
     ) IS
-        class_id NUMBER;
         person_id NUMBER;
+        exam_role_id NUMBER;
     BEGIN
-        SELECT id INTO class_id FROM organisation.Class WHERE name = class;
-        IF class_id IS NOT NULL THEN
-            INSERT INTO organisation.Participant (exam_id, person_id, exam_role_id)
-            SELECT exam_id, person_id, exam_role_id
-            FROM organisation.Person p
-            WHERE p.class_id = class;
-        END IF;
-
-        SELECT id INTO person_id FROM organisation.Person WHERE (firstname || ' ' || lastname) = person;
-        IF person_id IS NOT NULL THEN
+        SELECT id INTO person_id FROM organisation.Person WHERE (firstname || ' ' || lastname) = person_name;
+        SELECT id INTO exam_role_id FROM organisation.ExamRole WHERE role = exam_role;
+        IF person_id IS NOT NULL AND exam_role_id IS NOT NULL THEN
             INSERT INTO organisation.Participant (exam_id, person_id, exam_role_id)
             VALUES (exam_id, person_id, exam_role_id);
         END IF;
-    END AddParticipants;
+    END AddParticipant;
 
     FUNCTION FindReplacementExaminer(
         exam_id NUMBER

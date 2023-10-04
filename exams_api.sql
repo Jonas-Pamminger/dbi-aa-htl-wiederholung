@@ -1,10 +1,9 @@
 CREATE OR REPLACE PACKAGE exams_manager AS
     -- Hinzufügen weiterer Teilnehmer: Eine Klasse, ein einzelner Schüler oder eine weitere Rolle (zB.: Aufsichtsperson) können zu einem Test ergänzt werden
-    PROCEDURE AddParticipants(
-        test_id NUMBER,
-        class_id NUMBER DEFAULT NULL,
-        person_id NUMBER DEFAULT NULL,
-        test_role_id NUMBER DEFAULT NULL
+    PROCEDURE AddParticipant(
+        exam_id NUMBER,
+        person_name VARCHAR2 DEFAULT NULL,
+        exam_role VARCHAR2 DEFAULT 'Schüler'
     );
 
     -- Find-Replacement: Bei Verhinderung des vorherigen Prüfers wird ein Ersatz-Prüfer mit den nötigen Kompetenzen gesucht, und falls verfügbar, eingetragen
@@ -42,12 +41,11 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         new_class_name VARCHAR2
     );
 
-    FUNCTION CreateTest(
+    FUNCTION CreateExam(
         title VARCHAR2,
-        test_date TIMESTAMP,
-        examiner_id NUMBER DEFAULT NULL,
-        subject_id NUMBER,
-        class_id NUMBER DEFAULT NULL
+        exam_date TIMESTAMP,
+        examiner_name VARCHAR2 DEFAULT NULL,
+        subject_name VARCHAR2
     ) RETURN NUMBER;
 
     -- CRUD for Subject
@@ -244,26 +242,21 @@ END exams_manager;
 
 CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
-    PROCEDURE AddParticipants(
-        test_id NUMBER,
-        class_id NUMBER DEFAULT NULL,
-        person_id NUMBER DEFAULT NULL,
-        test_role_id NUMBER DEFAULT NULL
-    ) AS
+    PROCEDURE AddParticipant(
+        exam_id NUMBER,
+        person_name VARCHAR2 DEFAULT NULL,
+        exam_role VARCHAR2 DEFAULT 'Schüler'
+    ) IS
+        person_id NUMBER;
+        exam_role_id NUMBER;
     BEGIN
-        -- Insert participant records into the Participant table based on parameters
-        IF class_id IS NOT NULL THEN
-            INSERT INTO Participant (exam_id, person_id, exam_role_id)
-            SELECT test_id, person_id, test_role_id
-            FROM Person
-            WHERE class_id = class_id;
+        SELECT id INTO person_id FROM organisation.Person WHERE (firstname || ' ' || lastname) = person_name;
+        SELECT id INTO exam_role_id FROM organisation.ExamRole WHERE role = exam_role;
+        IF person_id IS NOT NULL AND exam_role_id IS NOT NULL THEN
+            INSERT INTO organisation.Participant (exam_id, person_id, exam_role_id)
+            VALUES (exam_id, person_id, exam_role_id);
         END IF;
-
-        IF person_id IS NOT NULL THEN
-            INSERT INTO Participant (exam_id, person_id, exam_role_id)
-            VALUES (test_id, person_id, test_role_id);
-        END IF;
-    END AddParticipants;
+    END AddParticipant;
 
     FUNCTION FindReplacementExaminer(
         test_id NUMBER
@@ -346,33 +339,33 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE id = class_id;
     END AscendClass;
 
-    FUNCTION CreateTest(
-        title VARCHAR2,
-        test_date TIMESTAMP,
-        examiner_id NUMBER DEFAULT NULL,
-        subject_id NUMBER,
-        class_id NUMBER DEFAULT NULL
-    ) RETURN NUMBER AS
-        test_id NUMBER;
-    BEGIN
-        -- Insert the test record into the Exam table
-        INSERT INTO Exam (title, exam_date, subject_id)
-        VALUES (title, test_date, subject_id)
-        RETURNING id INTO test_id;
+    FUNCTION CreateExam(
+    title VARCHAR2,
+    exam_date TIMESTAMP,
+    examiner_name VARCHAR2 DEFAULT NULL,
+    subject_name VARCHAR2
+) RETURN NUMBER AS
+    new_id NUMBER;
+    examiner_id NUMBER;
+BEGIN
+    IF examiner_name IS NOT NULL THEN
+        SELECT id INTO examiner_id
+        FROM organisation.Person
+        WHERE (firstname || ' ' || lastname) = examiner_name;
+    ELSE
+        examiner_id := NULL;
+    END IF;
 
-        -- If an examiner_id is provided, add the examiner as a participant
-        IF examiner_id IS NOT NULL THEN
-            AddParticipants(test_id, NULL, examiner_id, 1);
-        END IF;
+    INSERT INTO organisation.Exam (title, exam_date, subject_id, room_id)
+    VALUES (title, exam_date, (SELECT id FROM organisation.Subject WHERE name = subject_name), NULL)
+    RETURNING id INTO new_id;
 
-        -- If a class_id is provided, add the class as a participant
-        IF class_id IS NOT NULL THEN
-            AddParticipants(test_id, class_id, NULL, NULL);
-        END IF;
+    IF examiner_id IS NOT NULL THEN
+        AddParticipant(new_id, examiner_name);
+    END IF;
 
-        -- Return the test_id
-        RETURN test_id;
-    END CreateTest;
+    RETURN new_id;
+    END CreateExam;
 
     -- CRUD operations for Subject, Class, Person, Competence, RoomType, Room, ExamRole, Exam, and Participant go here
 
