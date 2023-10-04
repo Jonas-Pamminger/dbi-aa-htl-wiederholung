@@ -25,10 +25,21 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         score NUMBER
     );
 
-    -- Calculate-Grade-Average: Berechne für eine Klasse den Notendurchschnitt
+    -- Calculate-Grade-Average: Berechne für einen Schüler den Notendurchschnitt
     FUNCTION CalculateGradeAverage(
-        class_id NUMBER
+        student_id NUMBER
     ) RETURN NUMBER;
+
+    -- Print-Test-Results: Drucke die Ergebnisse eines Tests
+    PROCEDURE PrintTestResults(
+        test_id NUMBER
+    );
+
+    -- Print-Test-Results-For-Class-And-Subject: Drucke die Ergebnisse eines Tests für eine Klasse und ein Fach
+    PROCEDURE PrintTestResultsForClassAndSubject(
+        class_name VARCHAR2,
+        subject_name VARCHAR2
+    );
 
     -- Reserve-Room: Trage zum Test einen Raum ein, falls frei
     PROCEDURE ReserveRoom(
@@ -315,14 +326,92 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END GradeStudent;
 
     FUNCTION CalculateGradeAverage(
-        class_id NUMBER
+        student_id NUMBER
     ) RETURN NUMBER AS
         avg_score NUMBER;
     BEGIN
-
+        SELECT Round(AVG(p.score), 2) INTO avg_score
+        FROM Participant p
+                 JOIN Exam t ON p.exam_id = t.id
+                 JOIN Person pe ON p.person_id = pe.id
+        WHERE pe.id = student_id
+          AND t.EXAM_DATE BETWEEN TO_TIMESTAMP('2023-09-11 10:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('2024-09-11 11:00:00', 'YYYY-MM-DD HH24:MI:SS');
 
         RETURN 0;
     END CalculateGradeAverage;
+
+    PROCEDURE PrintTestResults(
+        test_id NUMBER
+    ) AS
+        -- Declare a cursor to fetch the query results
+        CURSOR test_results_cursor IS
+            SELECT pe.firstname || ' ' || pe.lastname AS Schüler, p.score AS Note
+            FROM Participant p
+                     JOIN Exam t ON p.exam_id = t.id
+                     JOIN Person pe ON p.person_id = pe.id
+            WHERE t.id = test_id -- Use the parameter test_id
+              AND p.score IS NOT NULL;
+
+        -- Declare variables to hold query results
+        v_schüler VARCHAR2(100);
+        v_note NUMBER;
+
+    BEGIN
+        dbms_output.PUT_LINE('Test Results');
+        dbms_output.PUT_LINE('------------');
+
+        -- Open the cursor
+        OPEN test_results_cursor;
+
+        -- Fetch and print each row from the cursor
+        LOOP
+            FETCH test_results_cursor INTO v_schüler, v_note;
+            EXIT WHEN test_results_cursor%NOTFOUND;
+            dbms_output.PUT_LINE(v_schüler || ': ' || v_note);
+        END LOOP;
+
+        -- Close the cursor
+        CLOSE test_results_cursor;
+
+    END PrintTestResults;
+
+    PROCEDURE PrintTestResultsForClassAndSubject(
+        class_name VARCHAR2,
+        subject_name VARCHAR2
+    ) AS
+        -- Declare a cursor to fetch the query results
+        CURSOR avg_scores_cursor IS
+            SELECT P2.FIRSTNAME || ' ' || P2.LASTNAME AS Schüler, AVG(p.score) AS Durchschnittsnote
+            FROM Participant p
+                     JOIN PERSON P2 ON p.PERSON_ID = P2.ID
+                     JOIN CLASS C2 ON P2.CLASS_ID = C2.ID
+                     JOIN Exam T ON T.ID = p.exam_id
+                     JOIN SUBJECT S2 ON T.SUBJECT_ID = S2.ID
+            WHERE C2.NAME = class_name AND S2.NAME = subject_name
+            GROUP BY P2.FIRSTNAME, P2.LASTNAME;
+
+        -- Declare variables to hold query results
+        v_schüler VARCHAR2(100);
+        v_durchschnittsnote NUMBER;
+
+    BEGIN
+        dbms_output.PUT_LINE('Average Scores');
+        dbms_output.PUT_LINE('--------------');
+
+        -- Open the cursor
+        OPEN avg_scores_cursor;
+
+        -- Fetch and print each row from the cursor
+        LOOP
+            FETCH avg_scores_cursor INTO v_schüler, v_durchschnittsnote;
+            EXIT WHEN avg_scores_cursor%NOTFOUND;
+            dbms_output.PUT_LINE(v_schüler || ': ' || v_durchschnittsnote);
+        END LOOP;
+
+        -- Close the cursor
+        CLOSE avg_scores_cursor;
+
+    END PrintTestResultsForClassAndSubject;
 
     PROCEDURE ReserveRoom(
         test_id NUMBER,
