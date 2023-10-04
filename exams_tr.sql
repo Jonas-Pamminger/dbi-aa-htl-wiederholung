@@ -151,7 +151,7 @@ OR REPLACE TRIGGER trg_testrole_logging
        AFTER INSERT OR
 UPDATE OR
 DELETE
-ON TestRole
+ON EXAMROLE
     FOR EACH ROW
 BEGIN
     IF
@@ -176,7 +176,7 @@ OR REPLACE TRIGGER trg_test_logging
        AFTER INSERT OR
 UPDATE OR
 DELETE
-ON Test
+ON Exam
     FOR EACH ROW
 BEGIN
     IF
