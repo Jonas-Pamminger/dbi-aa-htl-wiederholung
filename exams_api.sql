@@ -1,13 +1,4 @@
 CREATE OR REPLACE PACKAGE exams_manager AS
-    -- Test-Eintrag: Einen Test mit einer Klasse anlegen
-    FUNCTION CreateTest(
-        title VARCHAR2,
-        test_date TIMESTAMP,
-        examiner_id NUMBER DEFAULT NULL,
-        subject_id NUMBER,
-        class_id NUMBER DEFAULT NULL
-    ) RETURN NUMBER;
-
     -- Hinzufügen weiterer Teilnehmer: Eine Klasse, ein einzelner Schüler oder eine weitere Rolle (zB.: Aufsichtsperson) können zu einem Test ergänzt werden
     PROCEDURE AddParticipants(
         test_id NUMBER,
@@ -18,9 +9,8 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     -- Find-Replacement: Bei Verhinderung des vorherigen Prüfers wird ein Ersatz-Prüfer mit den nötigen Kompetenzen gesucht, und falls verfügbar, eingetragen
     FUNCTION FindReplacementExaminer(
-        test_id NUMBER,
-        old_examiner_id NUMBER
-    ) RETURN NUMBER;
+        test_id NUMBER
+    ) RETURN PERSON%rowtype;
 
     -- Find-Available-Room: Finde einen Raum mit einer entsprechenden Raumart
     FUNCTION FindAvailableRoom(
@@ -249,54 +239,6 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         person_id NUMBER,
         exam_role_id NUMBER
     );
-
-    -- DQL Select Statements
-
-    -- 1. Jährlicher Notenschnitt eines Schülers auslesen
-    FUNCTION get_avg_student_grade(
-        p_firstname VARCHAR2,
-        p_lastname VARCHAR2,
-        p_start_date DATE,
-        p_end_date DATE
-    ) RETURN NUMBER;
-
-    -- 2. Prüfungsergebnisse für einen bestimmten Test anzeigen
-    FUNCTION get_test_results(
-        p_test_id NUMBER
-    ) RETURN SYS_REFCURSOR;
-
-    -- 3. Noten aller Schüler in einer Klasse in einem bestimmten Fach
-    FUNCTION get_class_subject_grades(
-        p_class_name VARCHAR2,
-        p_subject_name VARCHAR2
-    ) RETURN SYS_REFCURSOR;
-
-    -- 4. Die Teilnehmer eines Tests und deren Rollen
-    FUNCTION get_test_participants(
-        p_test_title VARCHAR2
-    ) RETURN SYS_REFCURSOR;
-
-    -- 5. Alle Tests für ein bestimmtes Fach auflisten
-    FUNCTION get_tests_by_subject(
-        p_subject_name VARCHAR2
-    ) RETURN SYS_REFCURSOR;
-
-    -- 6. Eine Aufsichtsperson für einen bestimmten Test, mit gewisser Qualifikation
-    FUNCTION get_test_supervisor(
-        p_test_title VARCHAR2
-    ) RETURN SYS_REFCURSOR;
-
-    -- 7. Durchschnittliche Erfolgsquote einer Klasse/Fach
-    FUNCTION get_class_subject_success_rate(
-        p_class_name VARCHAR2,
-        p_subject_name VARCHAR2
-    ) RETURN NUMBER;
-
-    -- 8. Query to find free rooms for a specific date
-    FUNCTION find_free_rooms(
-        p_date DATE
-    ) RETURN SYS_REFCURSOR;
-
 END exams_manager;
 /
 
@@ -325,17 +267,19 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     FUNCTION FindReplacementExaminer(
         test_id NUMBER
-    ) RETURN NUMBER AS
-        Examiner NUMBER;
+    ) RETURN PERSON%rowtype AS
+        new_examiner PERSON%rowtype;
     BEGIN
-        SELECT pe.id
-        INTO Examiner
+        Select *
+        into new_examiner
+        from PERSON
+        where id =(SELECT pe.id
         FROM Exam t
                  JOIN Competence c ON t.subject_id = c.subject_id
                  JOIN Person pe ON c.person_id = pe.id
-        WHERE t.id = test_id;
+        WHERE t.id = test_id);
 
-        RETURN Examiner;
+        RETURN new_examiner;
     END FindReplacementExaminer;
 
     FUNCTION FindAvailableRoom(
@@ -911,155 +855,6 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
           AND p.person_id = person_id
           AND p.exam_role_id = exam_role_id;
     END DeleteParticipant;
-
-    -- 1. Jährlicher Notenschnitt eines Schülers auslesen
-    FUNCTION get_avg_student_grade(
-        p_firstname VARCHAR2,
-        p_lastname VARCHAR2,
-        p_start_date DATE,
-        p_end_date DATE
-    ) RETURN NUMBER AS
-        v_avg_grade NUMBER;
-    BEGIN
-        SELECT Round(AVG(p.score), 2) INTO v_avg_grade
-        FROM Participant p
-        JOIN Test t ON p.test_id = t.id
-        JOIN Person pe ON p.person_id = pe.id
-        WHERE pe.firstname = p_firstname
-        AND pe.lastname = p_lastname
-        AND t.TEST_DATE BETWEEN p_start_date AND p_end_date;
-
-        RETURN v_avg_grade;
-    END get_avg_student_grade;
-
--- 2. Prüfungsergebnisse für einen bestimmten Test anzeigen
-    FUNCTION get_test_results(
-        p_test_id NUMBER
-    ) RETURN SYS_REFCURSOR AS
-        v_result_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_result_cursor FOR
-        SELECT pe.firstname || ' ' || pe.lastname AS Schüler, p.score AS Note
-        FROM Participant p
-        JOIN Test t ON p.test_id = t.id
-        JOIN Person pe ON p.person_id = pe.id
-        WHERE t.id = p_test_id
-        AND p.score IS NOT NULL;
-
-        RETURN v_result_cursor;
-    END get_test_results;
-
--- 3. Noten aller Schüler in einer Klasse in einem bestimmten Fach (XXX)
-    FUNCTION get_class_subject_grades(
-        p_class_name VARCHAR2,
-        p_subject_name VARCHAR2
-    ) RETURN SYS_REFCURSOR AS
-        v_grade_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_grade_cursor FOR
-        SELECT P2.FIRSTNAME || ' ' || P2.lastname AS Schüler, AVG(p.score) AS Durchschnittsnote
-        FROM Participant p
-        JOIN PERSON P2 ON p.PERSON_ID = P2.ID
-        JOIN CLASS C2 ON P2.CLASS_ID = C2.ID
-        JOIN TEST T ON T.ID = p.TEST_ID
-        JOIN SUBJECT S2 ON T.SUBJECT_ID = S2.ID
-        WHERE C2.NAME = p_class_name
-        AND S2.NAME = p_subject_name
-        GROUP BY P2.FIRSTNAME, P2.LASTNAME;
-
-        RETURN v_grade_cursor;
-    END get_class_subject_grades;
-
--- 4. Die Teilnehmer eines Tests und deren Rollen
-    FUNCTION get_test_participants(
-        p_test_title VARCHAR2
-    ) RETURN SYS_REFCURSOR AS
-        v_participants_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_participants_cursor FOR
-        SELECT pe.firstname || ' ' || pe.lastname AS Person, tr.role AS Rolle
-        FROM Participant p
-        JOIN Test t ON p.test_id = t.id
-        JOIN Person pe ON p.person_id = pe.id
-        JOIN TestRole tr ON p.test_role_id = tr.id
-        WHERE t.title = p_test_title;
-
-        RETURN v_participants_cursor;
-    END get_test_participants;
-
--- 5. Alle Tests für ein bestimmtes Fach auflisten
-    FUNCTION get_tests_by_subject(
-        p_subject_name VARCHAR2
-    ) RETURN SYS_REFCURSOR AS
-        v_tests_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_tests_cursor FOR
-        SELECT title AS Test
-        FROM Test
-        WHERE subject_id = (SELECT id FROM Subject WHERE name = p_subject_name);
-
-        RETURN v_tests_cursor;
-    END get_tests_by_subject;
-
--- 6. Eine Aufsichtsperson für einen bestimmten Test, mit gewisser Qualifikation
-    FUNCTION get_test_supervisor(
-        p_test_title VARCHAR2
-    ) RETURN SYS_REFCURSOR AS
-        v_supervisor_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_supervisor_cursor FOR
-        SELECT pe.firstname || ' ' || pe.lastname AS Person
-        FROM TEST t
-        JOIN Competence c ON t.subject_id = c.subject_id
-        JOIN Person pe ON c.person_id = pe.id
-        WHERE t.title = p_test_title;
-
-        RETURN v_supervisor_cursor;
-    END get_test_supervisor;
-
--- 7. Durchschnittliche Erfolgsquote einer Klasse/Fach
-    FUNCTION get_class_subject_success_rate(
-        p_class_name VARCHAR2,
-        p_subject_name VARCHAR2
-    ) RETURN NUMBER AS
-        v_avg_success_rate NUMBER;
-    BEGIN
-        SELECT Round(AVG(p.score), 2) INTO v_avg_success_rate
-        FROM Participant p
-        JOIN TEST T ON T.ID = p.TEST_ID
-        JOIN SUBJECT S2 ON S2.ID = T.SUBJECT_ID
-        JOIN PERSON P2 ON p.PERSON_ID = P2.ID
-        JOIN CLASS C2 ON P2.CLASS_ID = C2.ID
-        WHERE S2.NAME = p_subject_name
-        AND C2.NAME = p_class_name;
-
-        RETURN v_avg_success_rate;
-    END get_class_subject_success_rate;
-
-
--- 8. Query to find free rooms for a specific date
-    FUNCTION find_free_rooms(
-        p_date DATE
-    ) RETURN SYS_REFCURSOR AS
-        v_free_rooms_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_free_rooms_cursor FOR
-        SELECT
-            r.id AS room_id,
-            r.designation AS room_designation,
-            rt.type AS room_type
-        FROM Room r
-        JOIN RoomType rt ON r.type_id = rt.id
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM Test t
-            WHERE t.room_id = r.id
-              AND t.test_date >= p_date
-              AND t.test_date < p_date + 1
-        );
-
-        RETURN v_free_rooms_cursor;
-    END find_free_rooms;
 
 END exams_manager;
 /
