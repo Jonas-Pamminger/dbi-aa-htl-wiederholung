@@ -187,7 +187,7 @@ VALUES (4, 'EDV-Saal 2', 2);
 INSERT INTO Room (id, designation, type_id)
 VALUES (5, 'Raum 103', 1);
 INSERT INTO Room (id, designation, type_id)
-VALUES (6, 'EDV-Saal 3', 2);
+VALUES (6, 'Raum 104', 2);
 
 -- Rollen
 INSERT INTO ExamRole (id, role)
@@ -212,9 +212,9 @@ VALUES (5, 'Geschichte-Test-1AHIF-1', TO_TIMESTAMP('2023-11-20 08:00:00', 'YYYY-
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
 VALUES (6, 'Geschichte-Test-1AHIF-2', TO_TIMESTAMP('2024-02-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
-VALUES (7, 'Biologie-Test-1AHIF-1', TO_TIMESTAMP('2024-01-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (7, 'Biologie-Test-1AHIF-1', TO_TIMESTAMP('2024-01-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 1);
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
-VALUES (8, 'Biologie-Test-1AHIF-2', TO_TIMESTAMP('2024-04-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (8, 'Biologie-Test-1AHIF-2', TO_TIMESTAMP('2024-04-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 1);
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
 VALUES (9, 'Chemie-Test-1AHIF-1', TO_TIMESTAMP('2024-03-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
@@ -226,133 +226,133 @@ VALUES (12, 'Physik-Test-1AHIF-2', TO_TIMESTAMP('2024-06-30 08:00:00', 'YYYY-MM-
 
 -- Examen für Klasse 1BHIF
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (13, 'Mathematik-Test-1BHIF-1', TO_TIMESTAMP('2023-09-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (13, 'Mathematik-Test-1BHIF-1', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (14, 'Mathematik-Test-1BHIF-2', TO_TIMESTAMP('2024-01-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (14, 'Mathematik-Test-1BHIF-2', TO_TIMESTAMP('2024-01-01 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (15, 'Informatik-Test-1BHIF-1', TO_TIMESTAMP('2023-10-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (15, 'Informatik-Test-1BHIF-1', TO_TIMESTAMP('2023-10-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 4);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (16, 'Informatik-Test-1BHIF-2', TO_TIMESTAMP('2024-01-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (16, 'Informatik-Test-1BHIF-2', TO_TIMESTAMP('2024-01-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 4);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (17, 'Geschichte-Test-1BHIF-1', TO_TIMESTAMP('2023-11-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (17, 'Geschichte-Test-1BHIF-1', TO_TIMESTAMP('2023-11-20 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (18, 'Geschichte-Test-1BHIF-2', TO_TIMESTAMP('2024-02-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (18, 'Geschichte-Test-1BHIF-2', TO_TIMESTAMP('2024-02-20 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (19, 'Biologie-Test-1BHIF-1', TO_TIMESTAMP('2024-01-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (19, 'Biologie-Test-1BHIF-1', TO_TIMESTAMP('2024-01-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 6);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (20, 'Biologie-Test-1BHIF-2', TO_TIMESTAMP('2024-04-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (20, 'Biologie-Test-1BHIF-2', TO_TIMESTAMP('2024-04-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 6);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (21, 'Chemie-Test-1BHIF-1', TO_TIMESTAMP('2024-03-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (21, 'Chemie-Test-1BHIF-1', TO_TIMESTAMP('2024-03-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (22, 'Chemie-Test-1BHIF-2', TO_TIMESTAMP('2024-06-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (22, 'Chemie-Test-1BHIF-2', TO_TIMESTAMP('2024-06-01 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (23, 'Physik-Test-1BHIF-1', TO_TIMESTAMP('2024-05-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (23, 'Physik-Test-1BHIF-1', TO_TIMESTAMP('2024-05-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (24, 'Physik-Test-1BHIF-2', TO_TIMESTAMP('2024-06-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (24, 'Physik-Test-1BHIF-2', TO_TIMESTAMP('2024-06-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
 
 -- Examen für Klasse 2AHIF
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
-VALUES (25, 'Mathematik-Test-2AHIF-1', TO_TIMESTAMP('2023-10-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (25, 'Mathematik-Test-2AHIF-1', TO_TIMESTAMP('2023-10-15 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (26, 'Mathematik-Test-2AHIF-2', TO_TIMESTAMP('2024-01-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (26, 'Mathematik-Test-2AHIF-2', TO_TIMESTAMP('2024-01-15 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (27, 'Informatik-Test-2AHIF-1', TO_TIMESTAMP('2023-11-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (27, 'Informatik-Test-2AHIF-1', TO_TIMESTAMP('2023-11-05 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (28, 'Informatik-Test-2AHIF-2', TO_TIMESTAMP('2024-02-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (28, 'Informatik-Test-2AHIF-2', TO_TIMESTAMP('2024-02-05 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
 INSERT INTO exam (id, title, exam_date, subject_id, room_id)
-VALUES (29, 'Geschichte-Test-2AHIF-1', TO_TIMESTAMP('2023-12-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (29, 'Geschichte-Test-2AHIF-1', TO_TIMESTAMP('2023-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (30, 'Geschichte-Test-2AHIF-2', TO_TIMESTAMP('2024-03-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (30, 'Geschichte-Test-2AHIF-2', TO_TIMESTAMP('2024-03-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (31, 'Biologie-Test-2AHIF-1', TO_TIMESTAMP('2024-01-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (31, 'Biologie-Test-2AHIF-1', TO_TIMESTAMP('2024-01-20 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (32, 'Biologie-Test-2AHIF-2', TO_TIMESTAMP('2024-04-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (32, 'Biologie-Test-2AHIF-2', TO_TIMESTAMP('2024-04-20 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (33, 'Chemie-Test-2AHIF-1', TO_TIMESTAMP('2024-03-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (33, 'Chemie-Test-2AHIF-1', TO_TIMESTAMP('2024-03-05 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (34, 'Chemie-Test-2AHIF-2', TO_TIMESTAMP('2024-06-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (34, 'Chemie-Test-2AHIF-2', TO_TIMESTAMP('2024-06-05 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (35, 'Physik-Test-2AHIF-1', TO_TIMESTAMP('2024-05-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (35, 'Physik-Test-2AHIF-1', TO_TIMESTAMP('2024-05-15 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (36, 'Physik-Test-2AHIF-2', TO_TIMESTAMP('2024-07-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (36, 'Physik-Test-2AHIF-2', TO_TIMESTAMP('2024-07-15 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
 
 -- Examen für Klasse 3AHIF
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
-VALUES (37, 'Mathematik-Test-3AHIF-1', TO_TIMESTAMP('2023-10-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (37, 'Mathematik-Test-3AHIF-1', TO_TIMESTAMP('2023-10-20 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (38, 'Mathematik-Test-3AHIF-2', TO_TIMESTAMP('2024-01-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (38, 'Mathematik-Test-3AHIF-2', TO_TIMESTAMP('2024-01-20 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (39, 'Informatik-Test-3AHIF-1', TO_TIMESTAMP('2023-11-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (39, 'Informatik-Test-3AHIF-1', TO_TIMESTAMP('2023-11-10 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (40, 'Informatik-Test-3AHIF-2', TO_TIMESTAMP('2024-02-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (40, 'Informatik-Test-3AHIF-2', TO_TIMESTAMP('2024-02-10 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (41, 'Geschichte-Test-3AHIF-1', TO_TIMESTAMP('2023-12-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (41, 'Geschichte-Test-3AHIF-1', TO_TIMESTAMP('2023-12-20 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (42, 'Geschichte-Test-3AHIF-2', TO_TIMESTAMP('2024-03-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (42, 'Geschichte-Test-3AHIF-2', TO_TIMESTAMP('2024-03-20 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (43, 'Biologie-Test-3AHIF-1', TO_TIMESTAMP('2024-01-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (43, 'Biologie-Test-3AHIF-1', TO_TIMESTAMP('2024-01-30 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (44, 'Biologie-Test-3AHIF-2', TO_TIMESTAMP('2024-04-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (44, 'Biologie-Test-3AHIF-2', TO_TIMESTAMP('2024-04-30 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (45, 'Chemie-Test-3AHIF-1', TO_TIMESTAMP('2024-03-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (45, 'Chemie-Test-3AHIF-1', TO_TIMESTAMP('2024-03-05 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (46, 'Chemie-Test-3AHIF-2', TO_TIMESTAMP('2024-06-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (46, 'Chemie-Test-3AHIF-2', TO_TIMESTAMP('2024-06-05 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (47, 'Physik-Test-3AHIF-1', TO_TIMESTAMP('2024-05-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (47, 'Physik-Test-3AHIF-1', TO_TIMESTAMP('2024-05-15 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (48, 'Physik-Test-3AHIF-2', TO_TIMESTAMP('2024-07-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (48, 'Physik-Test-3AHIF-2', TO_TIMESTAMP('2024-07-15 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 1);
 
 -- Examen für Klasse 4AHIF
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
-VALUES (49, 'Mathematik-Test-4AHIF-1', TO_TIMESTAMP('2023-11-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (49, 'Mathematik-Test-4AHIF-1', TO_TIMESTAMP('2023-11-07 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (50, 'Mathematik-Test-4AHIF-2', TO_TIMESTAMP('2024-02-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (50, 'Mathematik-Test-4AHIF-2', TO_TIMESTAMP('2024-02-07 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (51, 'Informatik-Test-4AHIF-1', TO_TIMESTAMP('2023-11-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (51, 'Informatik-Test-4AHIF-1', TO_TIMESTAMP('2023-11-17 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 4);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (52, 'Informatik-Test-4AHIF-2', TO_TIMESTAMP('2024-02-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (52, 'Informatik-Test-4AHIF-2', TO_TIMESTAMP('2024-02-17 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 4);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (53, 'Geschichte-Test-4AHIF-1', TO_TIMESTAMP('2023-12-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (53, 'Geschichte-Test-4AHIF-1', TO_TIMESTAMP('2023-12-07 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (54, 'Geschichte-Test-4AHIF-2', TO_TIMESTAMP('2024-03-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (54, 'Geschichte-Test-4AHIF-2', TO_TIMESTAMP('2024-03-07 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (55, 'Biologie-Test-4AHIF-1', TO_TIMESTAMP('2024-02-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (55, 'Biologie-Test-4AHIF-1', TO_TIMESTAMP('2024-02-17 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (56, 'Biologie-Test-4AHIF-2', TO_TIMESTAMP('2024-05-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (56, 'Biologie-Test-4AHIF-2', TO_TIMESTAMP('2024-05-17 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (57, 'Chemie-Test-4AHIF-1', TO_TIMESTAMP('2024-03-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (57, 'Chemie-Test-4AHIF-1', TO_TIMESTAMP('2024-03-17 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (58, 'Chemie-Test-4AHIF-2', TO_TIMESTAMP('2024-06-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (58, 'Chemie-Test-4AHIF-2', TO_TIMESTAMP('2024-06-17 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (59, 'Physik-Test-4AHIF-1', TO_TIMESTAMP('2024-04-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (59, 'Physik-Test-4AHIF-1', TO_TIMESTAMP('2024-04-07 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (60, 'Physik-Test-4AHIF-2', TO_TIMESTAMP('2024-07-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (60, 'Physik-Test-4AHIF-2', TO_TIMESTAMP('2024-07-07 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 3);
 
 -- Examen für Klasse 5AHIF
 INSERT INTO Exam (id, title, exam_date, subject_id, room_id)
-VALUES (61, 'Mathematik-Test-5AHIF-1', TO_TIMESTAMP('2023-11-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (61, 'Mathematik-Test-5AHIF-1', TO_TIMESTAMP('2023-11-14 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (62, 'Mathematik-Test-5AHIF-2', TO_TIMESTAMP('2024-02-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+VALUES (62, 'Mathematik-Test-5AHIF-2', TO_TIMESTAMP('2024-02-14 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (63, 'Informatik-Test-5AHIF-1', TO_TIMESTAMP('2023-11-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (63, 'Informatik-Test-5AHIF-1', TO_TIMESTAMP('2023-11-24 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 4);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (64, 'Informatik-Test-5AHIF-2', TO_TIMESTAMP('2024-02-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+VALUES (64, 'Informatik-Test-5AHIF-2', TO_TIMESTAMP('2024-02-24 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 4);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (65, 'Geschichte-Test-5AHIF-1', TO_TIMESTAMP('2023-12-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (65, 'Geschichte-Test-5AHIF-1', TO_TIMESTAMP('2023-12-14 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (66, 'Geschichte-Test-5AHIF-2', TO_TIMESTAMP('2024-03-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
+VALUES (66, 'Geschichte-Test-5AHIF-2', TO_TIMESTAMP('2024-03-14 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (67, 'Biologie-Test-5AHIF-1', TO_TIMESTAMP('2024-01-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (67, 'Biologie-Test-5AHIF-1', TO_TIMESTAMP('2024-01-30 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 6);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (68, 'Biologie-Test-5AHIF-2', TO_TIMESTAMP('2024-04-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4);
+VALUES (68, 'Biologie-Test-5AHIF-2', TO_TIMESTAMP('2024-04-30 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 6);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (69, 'Chemie-Test-5AHIF-1', TO_TIMESTAMP('2024-03-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (69, 'Chemie-Test-5AHIF-1', TO_TIMESTAMP('2024-03-04 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (70, 'Chemie-Test-5AHIF-2', TO_TIMESTAMP('2024-06-05 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
+VALUES (70, 'Chemie-Test-5AHIF-2', TO_TIMESTAMP('2024-06-04 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (71, 'Physik-Test-5AHIF-1', TO_TIMESTAMP('2024-05-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (71, 'Physik-Test-5AHIF-1', TO_TIMESTAMP('2024-05-14 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
 INSERT INTO exam(id, title, exam_date, subject_id, room_id)
-VALUES (72, 'Physik-Test-5AHIF-2', TO_TIMESTAMP('2024-07-15 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
+VALUES (72, 'Physik-Test-5AHIF-2', TO_TIMESTAMP('2024-07-14 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 6);
 
 
 -- Participants 1AHIF

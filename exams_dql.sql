@@ -20,7 +20,7 @@ JOIN PERSON P2 on p.PERSON_ID = P2.ID
 JOIN CLASS C2 on P2.CLASS_ID = C2.ID
 JOIN Exam T on T.ID = p.exam_id
 JOIN SUBJECT S2 on T.SUBJECT_ID = S2.ID
-where C2.NAME = 'Klasse A' AND S2.NAME = 'Mathematik'
+where C2.NAME = '5AHIF' AND S2.NAME = 'Mathematik'
 GROUP BY P2.FIRSTNAME, P2.LASTNAME;
 
 -- 4. Die Teilnehmer eines Tests und deren Rollen
@@ -29,7 +29,7 @@ FROM Participant p
 JOIN Exam t ON p.exam_id = t.id
 JOIN Person pe ON p.person_id = pe.id
 JOIN EXAMROLE tr ON p.EXAM_ROLE_ID = tr.id
-WHERE t.title = 'Mathe-EXAM';
+WHERE t.title = 'Mathematik-Test-3AHIF-1';
 
 -- 5. Alle Tests für ein bestimmtes Fach auflisten
 SELECT title AS Test
@@ -40,7 +40,7 @@ WHERE subject_id = (SELECT id FROM Subject WHERE name = 'Mathematik');
 SELECT pe.firstname || ' ' || pe.lastname AS Person from Exam t
 Join Competence c on t.subject_id = c.subject_id
 Join Person pe on c.person_id = pe.id
-where t.title = 'Mathe-EXAM';
+where t.title = 'Mathematik-Test-3AHIF-1';
 
 -- 7. Durchschnittliche Erfolgsquote einer Klasse/Fach
 SELECT Round(AVG(p.score),2) AS Durchschnittliche_Erfolgsquote from Participant p
@@ -48,7 +48,7 @@ JOIN Exam T on T.ID = p.exam_id
 JOIN SUBJECT S2 on S2.ID = T.SUBJECT_ID
 JOIN PERSON P2 on p.PERSON_ID = P2.ID
 JOIN CLASS C2 on P2.CLASS_ID = C2.ID
-where s2.NAME = 'Mathematik' and C2.NAME = 'Klasse A';
+where s2.NAME = 'Mathematik' and C2.NAME = '4AHIF';
 
 
 -- 8. Query to find free rooms for a specific date
@@ -62,7 +62,7 @@ WHERE NOT EXISTS (
     SELECT 1
     FROM Exam t
     WHERE t.room_id = r.id
-      AND t.EXAM_DATE >= TO_DATE('2023-09-27', 'YYYY-MM-DD') -- Specify the desired date
-      AND t.EXAM_DATE < TO_DATE('2023-09-28', 'YYYY-MM-DD') -- Specify the next day
+      AND t.EXAM_DATE >= TO_DATE('2023-10-15', 'YYYY-MM-DD') -- Specify the desired date
+      AND t.EXAM_DATE < TO_DATE('2023-10-16', 'YYYY-MM-DD') -- Specify the next day
 );
 
