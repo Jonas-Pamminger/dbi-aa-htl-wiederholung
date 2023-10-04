@@ -3,7 +3,7 @@ SELECT Round(AVG(p.score), 2) AS Durchschnittsnote
 FROM Participant p
 JOIN Exam t ON p.exam_id = t.id
 JOIN Person pe ON p.person_id = pe.id
-WHERE pe.firstname = 'Max' AND pe.lastname = 'Mustermann'
+WHERE pe.firstname = 'Luca' AND pe.lastname = 'Fischer'
   AND t.EXAM_DATE BETWEEN TO_TIMESTAMP('2023-09-11 10:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('2024-09-11 11:00:00', 'YYYY-MM-DD HH24:MI:SS');
 
 -- 2. Prüfungsergebnisse für einen bestimmten Test anzeigen

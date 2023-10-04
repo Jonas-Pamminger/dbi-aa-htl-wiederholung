@@ -378,6 +378,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (1, 15, 1, 99);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (1, 16, 1, 81);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (2, 1, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -400,6 +401,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (2, 15, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (2, 16, 1, 85);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (3, 2, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -422,6 +424,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (3, 15, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (3, 16, 1, 85);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (4, 2, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -444,6 +447,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (4, 15, 1, 99);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (4, 16, 1, 81);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (5, 2, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -466,6 +470,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (5, 15, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (5, 16, 1, 85);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (6, 2, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -488,6 +493,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (6, 15, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (6, 16, 1, 82);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (7, 3, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -510,6 +516,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (7, 15, 1, 96);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (7, 16, 1, 88);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (8, 3, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -532,6 +539,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (8, 15, 1, 93);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (8, 16, 1, 86);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (9, 5, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -554,6 +562,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (9, 15, 1, 97);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (9, 16, 1, 90);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (10, 5, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -576,6 +585,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (10, 15, 1, 94);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (10, 16, 1, 87);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (11, 1, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -598,6 +608,7 @@ INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (11, 15, 1, 95);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (11, 16, 1, 89);
+
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (12, 1, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -621,299 +632,301 @@ VALUES (12, 15, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (12, 16, 1, 85);
 
-INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES
+-- Klasse 2BHIF
+
 -- Für Examen 13
-(13, 6, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 7, 1, 92);
+VALUES (13, 6, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 8, 1, 81);
+VALUES (13, 17, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 9, 1, 79);
+VALUES (13, 18, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 10, 1, 74);
+VALUES (13, 19, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 11, 1, 56);
+VALUES (13, 20, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 12, 1, 49);
+VALUES (13, 21, 1, 56);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 13, 1, 25);
+VALUES (13, 22, 1, 49);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 14, 1, 78);
+VALUES (13, 23, 1, 25);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 15, 1, 99);
+VALUES (13, 24, 1, 78);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (13, 16, 1, 81);
+VALUES (13, 25, 1, 99);
+INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
+VALUES (13, 26, 1, 81);
 
 -- Für Examen 14
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (14, 6, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 7, 1, 88);
+VALUES (14, 17, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 8, 1, 56);
+VALUES (14, 18, 1, 56);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 9, 1, 81);
+VALUES (14, 19, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (14, 10, 1, 49);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 11, 1, 80);
+VALUES (14, 21, 1, 80);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 12, 1, 74);
+VALUES (14, 22, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 13, 1, 55);
+VALUES (14, 23, 1, 55);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 14, 1, 63);
+VALUES (14, 24, 1, 63);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 15, 1, 90);
+VALUES (14, 25, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (14, 16, 1, 85);
+VALUES (14, 26, 1, 85);
 
 -- Für Examen 15
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (15, 3, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 7, 1, 88);
+VALUES (15, 17, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 8, 1, 56);
+VALUES (15, 18, 1, 56);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 9, 1, 81);
+VALUES (15, 19, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 10, 1, 49);
+VALUES (15, 20, 1, 49);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 11, 1, 80);
+VALUES (15, 21, 1, 80);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 12, 1, 74);
+VALUES (15, 22, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 13, 1, 55);
+VALUES (15, 23, 1, 55);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 14, 1, 63);
+VALUES (15, 24, 1, 63);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 15, 1, 90);
+VALUES (15, 25, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (15, 16, 1, 85);
+VALUES (15, 26, 1, 85);
 
 -- Für Examen 16
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (16, 3, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 7, 1, 92);
+VALUES (16, 17, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 8, 1, 81);
+VALUES (16, 18, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 9, 1, 79);
+VALUES (16, 19, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 10, 1, 74);
+VALUES (16, 20, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 11, 1, 56);
+VALUES (16, 21, 1, 56);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 12, 1, 49);
+VALUES (16, 22, 1, 49);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 13, 1, 25);
+VALUES (16, 23, 1, 25);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 14, 1, 78);
+VALUES (16, 24, 1, 78);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 15, 1, 99);
+VALUES (16, 25, 1, 99);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (16, 16, 1, 81);
+VALUES (16, 26, 1, 81);
 
 -- Für Examen 17
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (17, 4, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 7, 1, 88);
+VALUES (17, 17, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 8, 1, 56);
+VALUES (17, 18, 1, 56);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 9, 1, 81);
+VALUES (17, 19, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 10, 1, 49);
+VALUES (17, 20, 1, 49);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 11, 1, 80);
+VALUES (17, 21, 1, 80);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 12, 1, 74);
+VALUES (17, 22, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 13, 1, 55);
+VALUES (17, 23, 1, 55);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 14, 1, 63);
+VALUES (17, 24, 1, 63);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 15, 1, 90);
+VALUES (17, 25, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (17, 16, 1, 85);
+VALUES (17, 26, 1, 85);
 
 -- Für Examen 18
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (18, 4, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 7, 1, 76);
+VALUES (18, 17, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 8, 1, 62);
+VALUES (18, 18, 1, 62);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 9, 1, 85);
+VALUES (18, 19, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 10, 1, 54);
+VALUES (18, 20, 1, 54);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 11, 1, 78);
+VALUES (18, 21, 1, 78);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 12, 1, 70);
+VALUES (18, 22, 1, 70);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 13, 1, 58);
+VALUES (18, 23, 1, 58);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 14, 1, 69);
+VALUES (18, 24, 1, 69);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 15, 1, 91);
+VALUES (18, 25, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (18, 16, 1, 82);
+VALUES (18, 26, 1, 82);
 
 -- Für Examen 19
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (19, 5, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 7, 1, 90);
+VALUES (19, 17, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 8, 1, 68);
+VALUES (19, 18, 1, 68);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 9, 1, 89);
+VALUES (19, 19, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 10, 1, 60);
+VALUES (19, 20, 1, 60);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 11, 1, 86);
+VALUES (19, 21, 1, 86);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 12, 1, 72);
+VALUES (19, 22, 1, 72);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 13, 1, 64);
+VALUES (19, 23, 1, 64);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 14, 1, 71);
+VALUES (19, 24, 1, 71);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 15, 1, 96);
+VALUES (19, 25, 1, 96);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (19, 16, 1, 88);
+VALUES (19, 26, 1, 88);
 
 -- Für Examen 20
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (20, 5, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 7, 1, 85);
+VALUES (20, 17, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 8, 1, 72);
+VALUES (20, 18, 1, 72);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 9, 1, 88);
+VALUES (20, 19, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 10, 1, 63);
+VALUES (20, 20, 1, 63);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 11, 1, 84);
+VALUES (20, 21, 1, 84);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 12, 1, 70);
+VALUES (20, 22, 1, 70);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 13, 1, 62);
+VALUES (20, 23, 1, 62);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 14, 1, 76);
+VALUES (20, 24, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 15, 1, 93);
+VALUES (20, 25, 1, 93);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (20, 16, 1, 86);
+VALUES (20, 26, 1, 86);
 
 -- Für Examen 21
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (21, 6, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 7, 1, 91);
+VALUES (21, 17, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 8, 1, 74);
+VALUES (21, 18, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 9, 1, 90);
+VALUES (21, 19, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 10, 1, 66);
+VALUES (21, 20, 1, 66);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 11, 1, 89);
+VALUES (21, 21, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 12, 1, 77);
+VALUES (21, 22, 1, 77);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 13, 1, 68);
+VALUES (21, 23, 1, 68);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 14, 1, 75);
+VALUES (21, 24, 1, 75);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 15, 1, 97);
+VALUES (21, 25, 1, 97);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (21, 16, 1, 90);
+VALUES (21, 26, 1, 90);
 
 -- Für Examen 22
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (22, 6, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 7, 1, 87);
+VALUES (22, 17, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 8, 1, 71);
+VALUES (22, 18, 1, 71);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 9, 1, 86);
+VALUES (22, 19, 1, 86);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 10, 1, 65);
+VALUES (22, 20, 1, 65);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 11, 1, 85);
+VALUES (22, 21, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 12, 1, 72);
+VALUES (22, 22, 1, 72);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 13, 1, 67);
+VALUES (22, 23, 1, 67);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 14, 1, 79);
+VALUES (22, 24, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 15, 1, 94);
+VALUES (22, 25, 1, 94);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (22, 16, 1, 87);
+VALUES (22, 26, 1, 87);
 
 -- Für Examen 23
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (23, 5, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 7, 1, 89);
+VALUES (23, 17, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 8, 1, 73);
+VALUES (23, 18, 1, 73);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 9, 1, 87);
+VALUES (23, 19, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 10, 1, 64);
+VALUES (23, 20, 1, 64);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 11, 1, 88);
+VALUES (23, 21, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 12, 1, 76);
+VALUES (23, 22, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 13, 1, 69);
+VALUES (23, 23, 1, 69);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 14, 1, 74);
+VALUES (23, 24, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 15, 1, 95);
+VALUES (23, 25, 1, 95);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (23, 16, 1, 89);
+VALUES (23, 26, 1, 89);
 
 -- Für Examen 24
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (24, 5, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 7, 1, 84);
+VALUES (24, 17, 1, 84);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 8, 1, 70);
+VALUES (24, 18, 1, 70);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 9, 1, 85);
+VALUES (24, 19, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 10, 1, 62);
+VALUES (24, 20, 1, 62);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 11, 1, 83);
+VALUES (24, 21, 1, 83);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 12, 1, 71);
+VALUES (24, 22, 1, 71);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 13, 1, 66);
+VALUES (24, 23, 1, 66);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 14, 1, 75);
+VALUES (24, 24, 1, 75);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 15, 1, 92);
+VALUES (24, 25, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (24, 16, 1, 85);
+VALUES (24, 26, 1, 85);
 
-INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES
+-- Klasse 2AHIF
+
 -- Für Examen 25
-(25, 1, 2, NULL);
+INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
+VALUES (25, 1, 2, NULL);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (25, 27, 1, 80);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1079,10 +1092,11 @@ VALUES (36, 30, 1, 55);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (36, 31, 1, 63);
 
+-- Klasse 3AHIF
 
 -- Für Examen 37 (Mathematik-Test-3AHIF-1)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (37, 32, 2, 58);
+VALUES (37, 32, 1, 58);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (37, 33, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1092,11 +1106,11 @@ VALUES (37, 35, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (37, 36, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (37, 6, 3, NULL);
+VALUES (37, 6, 2, NULL);
 
 -- Für Examen 38 (Mathematik-Test-3AHIF-2)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (38, 32, 2, 98);
+VALUES (38, 32, 1, 98);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (38, 33, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1106,11 +1120,11 @@ VALUES (38, 35, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (38, 36, 1, 49);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (38, 6, 3, NULL);
+VALUES (38, 6, 2, NULL);
 
 -- Für Examen 39 (Informatik-Test-3AHIF-1)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (39, 32, 2, 68);
+VALUES (39, 32, 1, 68);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (39, 33, 1, 80);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1120,11 +1134,11 @@ VALUES (39, 35, 1, 55);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (39, 36, 1, 63);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (39, 2, 3, NULL);
+VALUES (39, 2, 2, NULL);
 
 -- Für Examen 40 (Informatik-Test-3AHIF-2)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (40, 32, 2, 77);
+VALUES (40, 32, 1, 77);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (40, 33, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1134,11 +1148,11 @@ VALUES (40, 35, 1, 86);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (40, 36, 1, 65);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (40, 2, 3, NULL);
+VALUES (40, 2, 2, NULL);
 
 -- Für Examen 41 (Geschichte-Test-3AHIF-1)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (41, 32, 2, 23);
+VALUES (41, 32, 1, 23);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (41, 33, 1, 71);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1148,11 +1162,11 @@ VALUES (41, 35, 1, 65);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (41, 36, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (41, 5, 3, NULL);
+VALUES (41, 5, 2, NULL);
 
 -- Für Examen 42 (Geschichte-Test-3AHIF-2)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (42, 32, 2, 65);
+VALUES (42, 32, 1, 65);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (42, 33, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1162,11 +1176,11 @@ VALUES (42, 35, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (42, 36, 1, 64);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (42, 5, 3, NULL);
+VALUES (42, 5, 2, NULL);
 
 -- Für Examen 43 (Biologie-Test-3AHIF-1)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (43, 32, 2, 66);
+VALUES (43, 32, 1, 66);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (43, 33, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1176,11 +1190,11 @@ VALUES (43, 35, 1, 69);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (43, 36, 1, 74);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (43, 6, 3, NULL);
+VALUES (43, 6, 2, NULL);
 
 -- Für Examen 44 (Biologie-Test-3AHIF-2)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (44, 32, 2, 89);
+VALUES (44, 32, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (44, 33, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1190,11 +1204,11 @@ VALUES (44, 35, 1, 68);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (44, 36, 1, 75);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (44, 6, 3, NULL);
+VALUES (44, 6, 2, NULL);
 
 -- Für Examen 45 (Chemie-Test-3AHIF-1)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (45, 32, 2, 65);
+VALUES (45, 32, 1, 65);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (45, 33, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1204,11 +1218,11 @@ VALUES (45, 35, 1, 70);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (45, 36, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (45, 5, 3, NULL);
+VALUES (45, 5, 2, NULL);
 
 -- Für Examen 46 (Chemie-Test-3AHIF-2)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (46, 32, 2, 72);
+VALUES (46, 32, 1, 72);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (46, 33, 1, 84);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1218,11 +1232,11 @@ VALUES (46, 35, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (46, 36, 1, 62);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (46, 5, 3, NULL);
+VALUES (46, 5, 2, NULL);
 
 -- Für Examen 47 (Physik-Test-3AHIF-1)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (47, 32, 2, 90);
+VALUES (47, 32, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (47, 33, 1, 83);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1232,11 +1246,11 @@ VALUES (47, 35, 1, 66);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (47, 36, 1, 75);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (47, 6, 3, NULL);
+VALUES (47, 6, 2, NULL);
 
 -- Für Examen 48 (Physik-Test-3AHIF-2)
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (48, 32, 2, 33);
+VALUES (48, 32, 1, 33);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (48, 33, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1246,11 +1260,12 @@ VALUES (48, 35, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (48, 36, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (48, 6, 3, NULL);
+VALUES (48, 6, 2, NULL);
 
+-- Klasse 4AHIF
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (49, 37, 2, 85);
+VALUES (49, 37, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (49, 38, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1260,10 +1275,10 @@ VALUES (49, 40, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (49, 41, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (49, 1, 3, NULL);
+VALUES (49, 1, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (50, 37, 2, 90);
+VALUES (50, 37, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (50, 38, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1273,10 +1288,10 @@ VALUES (50, 40, 1, 82);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (50, 41, 1, 95);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (50, 1, 3, NULL);
+VALUES (50, 1, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (51, 37, 2, 79);
+VALUES (51, 37, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (51, 38, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1286,10 +1301,10 @@ VALUES (51, 40, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (51, 41, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (51, 4, 3, NULL);
+VALUES (51, 4, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (52, 37, 2, 88);
+VALUES (52, 37, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (52, 38, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1299,10 +1314,10 @@ VALUES (52, 40, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (52, 41, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (52, 4, 3, NULL);
+VALUES (52, 4, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (53, 37, 2, 84);
+VALUES (53, 37, 1, 84);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (53, 38, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1312,10 +1327,10 @@ VALUES (53, 40, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (53, 41, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (53, 2, 3, NULL);
+VALUES (53, 2, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (54, 37, 2, 93);
+VALUES (54, 37, 1, 93);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (54, 38, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1325,10 +1340,10 @@ VALUES (54, 40, 1, 86);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (54, 41, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (54, 2, 3, NULL);
+VALUES (54, 2, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (55, 37, 2, 87);
+VALUES (55, 37, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (55, 38, 1, 82);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1338,10 +1353,10 @@ VALUES (55, 40, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (55, 41, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (55, 3, 3, NULL);
+VALUES (55, 3, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (56, 37, 2, 91);
+VALUES (56, 37, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (56, 38, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1351,10 +1366,10 @@ VALUES (56, 40, 1, 84);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (56, 41, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (56, 3, 3, NULL);
+VALUES (56, 3, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (57, 37, 2, 76);
+VALUES (57, 37, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (57, 38, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1364,10 +1379,10 @@ VALUES (57, 40, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (57, 41, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (57, 6, 3, NULL);
+VALUES (57, 6, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (58, 37, 2, 89);
+VALUES (58, 37, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (58, 38, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1377,10 +1392,10 @@ VALUES (58, 40, 1, 93);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (58, 41, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (58, 6, 3, NULL);
+VALUES (58, 6, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (59, 37, 2, 78);
+VALUES (59, 37, 1, 78);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (59, 38, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1390,10 +1405,10 @@ VALUES (59, 40, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (59, 41, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (59, 1, 3, NULL);
+VALUES (59, 1, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (60, 37, 2, 76);
+VALUES (60, 37, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (60, 38, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
@@ -1403,7 +1418,9 @@ VALUES (60, 40, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (60, 41, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (60, 1, 3, NULL);
+VALUES (60, 1, 2, NULL);
+
+-- Klasse 5AHIF
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (61, 42, 1, 87);
@@ -1416,7 +1433,7 @@ VALUES (61, 45, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (61, 46, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (61, 6, 3, NULL);
+VALUES (61, 6, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (62, 42, 1, 90);
@@ -1429,7 +1446,7 @@ VALUES (62, 45, 1, 82);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (62, 46, 1, 95);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (62, 6, 3, NULL);
+VALUES (62, 6, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (63, 42, 1, 79);
@@ -1442,7 +1459,7 @@ VALUES (63, 45, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (63, 46, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (63, 2, 3, NULL);
+VALUES (63, 2, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (64, 42, 1, 88);
@@ -1455,7 +1472,7 @@ VALUES (64, 45, 1, 76);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (64, 46, 1, 89);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (64, 2, 3, NULL);
+VALUES (64, 2, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (65, 42, 1, 84);
@@ -1468,7 +1485,7 @@ VALUES (65, 45, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (65, 46, 1, 81);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (65, 4, 3, NULL);
+VALUES (65, 4, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (66, 42, 1, 93);
@@ -1481,7 +1498,7 @@ VALUES (66, 45, 1, 86);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (66, 46, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (66, 4, 3, NULL);
+VALUES (66, 4, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (67, 42, 1, 87);
@@ -1494,7 +1511,7 @@ VALUES (67, 45, 1, 85);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (67, 46, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (67, 3, 3, NULL);
+VALUES (67, 3, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (68, 42, 1, 91);
@@ -1507,7 +1524,7 @@ VALUES (68, 45, 1, 84);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (68, 46, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (68, 3, 3, NULL);
+VALUES (68, 3, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (69, 42, 1, 76);
@@ -1520,7 +1537,7 @@ VALUES (69, 45, 1, 79);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (69, 46, 1, 91);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (69, 5, 3, NULL);
+VALUES (69, 5, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (70, 42, 1, 89);
@@ -1533,7 +1550,7 @@ VALUES (70, 45, 1, 93);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (70, 46, 1, 87);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (70, 5, 3, NULL);
+VALUES (70, 5, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (71, 42, 1, 78);
@@ -1546,7 +1563,7 @@ VALUES (71, 45, 1, 90);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (71, 46, 1, 92);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (71, 5, 3, NULL);
+VALUES (71, 5, 2, NULL);
 
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (72, 42, 1, 76);
@@ -1557,6 +1574,6 @@ VALUES (72, 44, 1, 84);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
 VALUES (72, 46, 1, 88);
 INSERT INTO Participant (exam_id, person_id, exam_role_id, score)
-VALUES (72, 5, 3, NULL);
+VALUES (72, 5, 2, NULL);
 
 COMMIT;
