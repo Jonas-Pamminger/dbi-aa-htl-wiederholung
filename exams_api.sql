@@ -1,64 +1,64 @@
 CREATE OR REPLACE PACKAGE exams_manager AS
     -- Hinzufügen weiterer Teilnehmer: Eine Klasse, ein einzelner Schüler oder eine weitere Rolle (zB.: Aufsichtsperson) können zu einem Test ergänzt werden
     PROCEDURE AddParticipants(
-        test_id NUMBER,
-        class_id NUMBER DEFAULT NULL,
-        person_id NUMBER DEFAULT NULL,
-        test_role_id NUMBER DEFAULT NULL
+        exam_id Exam.id%TYPE,
+        class_Id Class.id%type DEFAULT NULL,
+        person_id Person.id%type DEFAULT NULL,
+       exam_role_id ExamRole.id%type DEFAULT NULL
     );
 
     -- Find-Replacement: Bei Verhinderung des vorherigen Prüfers wird ein Ersatz-Prüfer mit den nötigen Kompetenzen gesucht, und falls verfügbar, eingetragen
     FUNCTION FindReplacementExaminer(
-        test_id NUMBER
+        exam_id Exam.id%TYPE
     ) RETURN PERSON%rowtype;
 
     -- Find-Available-Room: Finde einen Raum mit einer entsprechenden Raumart
     FUNCTION FindAvailableRoom(
-        room_type VARCHAR2,
-        test_date TIMESTAMP
+        room_type RoomType.id%type,
+        exam_date Exam.exam_date%type 
     ) RETURN NUMBER;
 
     -- Grade-Student: Trage für einen Schüler eine Note ein
     PROCEDURE GradeStudent(
-        test_id NUMBER,
-        person_id NUMBER,
+        exam_id Exam.id%TYPE,
+        person_id Person.id%type,
         score NUMBER
     );
 
     -- Calculate-Grade-Average: Berechne für einen Schüler den Notendurchschnitt
     FUNCTION CalculateGradeAverage(
-        student_id NUMBER
+        student_id Person.id%type
     ) RETURN NUMBER;
 
     -- Print-Test-Results: Drucke die Ergebnisse eines Tests
     PROCEDURE PrintTestResults(
-        test_id NUMBER
+        exam_id Exam.id%TYPE
     );
 
     -- Print-Test-Results-For-Class-And-Subject: Drucke die Ergebnisse eines Tests für eine Klasse und ein Fach
     PROCEDURE PrintTestResultsForClassAndSubject(
-        class_name VARCHAR2,
-        subject_name VARCHAR2
+        class_name Class.name%type,
+        subject_name Subject.name%type
     );
 
     -- Reserve-Room: Trage zum Test einen Raum ein, falls frei
     PROCEDURE ReserveRoom(
-        test_id NUMBER,
-        room_id NUMBER
+        exam_id Exam.id%TYPE,
+        room_id Room.id%type
     );
 
     -- Ascend-Class: Erhöhe die Schulstufe der Klasse
     PROCEDURE AscendClass(
-        class_id NUMBER,
-        new_class_name VARCHAR2
+        class_Id Class.id%type,
+        new_class_name Class.name%type
     );
 
-    FUNCTION CreateTest(
-        title VARCHAR2,
-        test_date TIMESTAMP,
-        examiner_id NUMBER DEFAULT NULL,
-        subject_id NUMBER,
-        class_id NUMBER DEFAULT NULL
+    FUNCTION CreateExam(
+        title Exam.title%type,
+        exam_date Exam.exam_date%type ,
+        examiner_id Person.id%type DEFAULT NULL,
+        subject_id Subject.id%type,
+        class_Id Class.id%type DEFAULT NULL
     ) RETURN NUMBER;
 
     -- CRUD for Subject
@@ -82,7 +82,7 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     -- CRUD for Class
     FUNCTION CreateClass(
         name VARCHAR2,
-        subject_id NUMBER
+        subject_id Subject.id%type
     ) RETURN NUMBER;
 
     FUNCTION ReadClass(
@@ -92,7 +92,7 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     PROCEDURE UpdateClass(
         old_name VARCHAR2,
         new_name VARCHAR2,
-        subject_id NUMBER
+        subject_id Subject.id%type
     );
 
     PROCEDURE DeleteClass(
@@ -129,13 +129,13 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     FUNCTION CreateCompetenceWithPerson(
         description VARCHAR2,
-        person_id NUMBER
+        person_id Person.id%type
     ) RETURN NUMBER;
 
     FUNCTION CreateCompetenceWithPersonAndSubject(
         description VARCHAR2,
-        person_id NUMBER,
-        subject_id NUMBER
+        person_id Person.id%type,
+        subject_id Subject.id%type
     ) RETURN NUMBER;
 
     FUNCTION ReadCompetence(
@@ -145,8 +145,8 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     PROCEDURE UpdateCompetence(
         old_description VARCHAR2,
         new_description VARCHAR2,
-        person_id NUMBER,
-        subject_id NUMBER
+        person_id Person.id%type,
+        subject_id Subject.id%type
     );
 
     PROCEDURE DeleteCompetence(
@@ -155,16 +155,16 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     -- CRUD for RoomType
     FUNCTION CreateRoomType(
-        room_type VARCHAR2
+        room_type RoomType.id%type
     ) RETURN NUMBER;
 
     PROCEDURE UpdateRoomType(
-        old_room_type VARCHAR2,
-        new_room_type VARCHAR2
+        old_room_type RoomType.id%type,
+        new_room_type RoomType.id%type
     );
 
     PROCEDURE DeleteRoomType(
-        room_type VARCHAR2
+        room_type RoomType.id%type
     );
 
     -- CRUD for Room
@@ -178,12 +178,12 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     ) RETURN ROOM%rowtype;
 
     PROCEDURE UpdateRoom(
-        old_room_id NUMBER,
+        old_room_id Room.id%type,
         new_room_type_id NUMBER
     );
 
     PROCEDURE DeleteRoom(
-        room_id NUMBER
+        room_id Room.id%type
     );
 
     -- CRUD for ExamRole
@@ -206,18 +206,18 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     -- CRUD for Exam
     FUNCTION CreateExam(
-        title VARCHAR2,
+        title Exam.title%type,
         exam_date TIMESTAMP,
-        subject_id NUMBER,
-        room_id NUMBER DEFAULT NULL
+        subject_id Subject.id%type,
+        room_id Room.id%type DEFAULT NULL
     ) RETURN NUMBER;
 
     PROCEDURE UpdateExam(
         exam_id NUMBER,
-        title VARCHAR2,
+        title Exam.title%type,
         exam_date TIMESTAMP,
-        subject_id NUMBER,
-        room_id NUMBER DEFAULT NULL
+        subject_id Subject.id%type,
+        room_id Room.id%type DEFAULT NULL
     );
 
     PROCEDURE DeleteExam(
@@ -227,27 +227,27 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     -- CRUD for Participant
     PROCEDURE CreateParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER,
         score NUMBER DEFAULT NULL
     );
 
     FUNCTION ReadParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER
     ) RETURN PARTICIPANT%rowtype;
 
     PROCEDURE UpdateParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER,
         score NUMBER
     );
 
     PROCEDURE DeleteParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER
     );
 END exams_manager;
@@ -256,28 +256,28 @@ END exams_manager;
 CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     PROCEDURE AddParticipants(
-        test_id NUMBER,
-        class_id NUMBER DEFAULT NULL,
-        person_id NUMBER DEFAULT NULL,
-        test_role_id NUMBER DEFAULT NULL
+        exam_id Exam.id%TYPE,
+        class_Id Class.id%type DEFAULT NULL,
+        person_id Person.id%type DEFAULT NULL,
+        exam_role_id ExamRole.id%type DEFAULT NULL
     ) AS
     BEGIN
         -- Insert participant records into the Participant table based on parameters
         IF class_id IS NOT NULL THEN
             INSERT INTO Participant (exam_id, person_id, exam_role_id)
-            SELECT test_id, person_id, test_role_id
+            SELECT exam_id, person_id, exam_role_id
             FROM Person
             WHERE class_id = class_id;
         END IF;
 
         IF person_id IS NOT NULL THEN
             INSERT INTO Participant (exam_id, person_id, exam_role_id)
-            VALUES (test_id, person_id, test_role_id);
+            VALUES (exam_id, person_id, exam_role_id);
         END IF;
     END AddParticipants;
 
     FUNCTION FindReplacementExaminer(
-        test_id NUMBER
+        exam_id Exam.id%TYPE
     ) RETURN PERSON%rowtype AS
         new_examiner PERSON%rowtype;
     BEGIN
@@ -288,16 +288,16 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         FROM Exam t
                  JOIN Competence c ON t.subject_id = c.subject_id
                  JOIN Person pe ON c.person_id = pe.id
-        WHERE t.id = test_id);
+        WHERE t.id = exam_id);
 
         RETURN new_examiner;
     END FindReplacementExaminer;
 
     FUNCTION FindAvailableRoom(
-        room_type VARCHAR2,
-        test_date TIMESTAMP
+        room_type RoomType.id%type,
+        exam_date Exam.exam_date%type 
     ) RETURN NUMBER AS
-        room_id NUMBER;
+        room_id Room.id%type;
     BEGIN
         SELECT r.id
         INTO room_id
@@ -306,27 +306,27 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE NOT EXISTS (SELECT 1
                           FROM Exam t
                           WHERE t.room_id = r.id
-                            AND t.exam_date >= test_date -- Use the parameter directly, no need to use TO_DATE
-                            AND t.exam_date < test_date + INTERVAL '1' DAY);
+                            AND t.exam_date >= exam_date  -- Use the parameter directly, no need to use TO_DATE
+                            AND t.exam_date < exam_date  + INTERVAL '1' DAY);
 
         RETURN room_id;
     END FindAvailableRoom;
 
     PROCEDURE GradeStudent(
-        test_id NUMBER,
-        person_id NUMBER,
+        exam_id Exam.id%TYPE,
+        person_id Person.id%type,
         score NUMBER
     ) AS
     BEGIN
         -- Insert the student's score into the Participant table
         UPDATE Participant
         SET score = score
-        WHERE exam_id = test_id
+        WHERE exam_id = exam_id
           AND person_id = person_id;
     END GradeStudent;
 
     FUNCTION CalculateGradeAverage(
-        student_id NUMBER
+        student_id Person.id%type
     ) RETURN NUMBER AS
         avg_score NUMBER;
     BEGIN
@@ -341,7 +341,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END CalculateGradeAverage;
 
     PROCEDURE PrintTestResults(
-        test_id NUMBER
+        exam_id Exam.id%TYPE
     ) AS
         -- Declare a cursor to fetch the query results
         CURSOR test_results_cursor IS
@@ -349,7 +349,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
             FROM Participant p
                      JOIN Exam t ON p.exam_id = t.id
                      JOIN Person pe ON p.person_id = pe.id
-            WHERE t.id = test_id -- Use the parameter test_id
+            WHERE t.id = exam_id -- Use the parameter exam_id
               AND p.score IS NOT NULL;
 
         -- Declare variables to hold query results
@@ -376,8 +376,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END PrintTestResults;
 
     PROCEDURE PrintTestResultsForClassAndSubject(
-        class_name VARCHAR2,
-        subject_name VARCHAR2
+        class_name Class.name%type,
+        subject_name Subject.name%type
     ) AS
         -- Declare a cursor to fetch the query results
         CURSOR avg_scores_cursor IS
@@ -414,19 +414,19 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END PrintTestResultsForClassAndSubject;
 
     PROCEDURE ReserveRoom(
-        test_id NUMBER,
-        room_id NUMBER
+        exam_id Exam.id%TYPE,
+        room_id Room.id%type
     ) AS
     BEGIN
         -- Update the Exam record to set the room_id
         UPDATE Exam
         SET room_id = room_id
-        WHERE id = test_id;
+        WHERE id = exam_id;
     END ReserveRoom;
 
     PROCEDURE AscendClass(
-        class_id NUMBER,
-        new_class_name VARCHAR2
+        class_Id Class.id%type,
+        new_class_name Class.name%type
     ) AS
     BEGIN
         -- Update the Class record to change the class name
@@ -435,33 +435,33 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE id = class_id;
     END AscendClass;
 
-    FUNCTION CreateTest(
-        title VARCHAR2,
-        test_date TIMESTAMP,
-        examiner_id NUMBER DEFAULT NULL,
-        subject_id NUMBER,
-        class_id NUMBER DEFAULT NULL
+    FUNCTION CreateExam(
+        title Exam.title%type,
+        exam_date Exam.exam_date%type ,
+        examiner_id Person.id%type DEFAULT NULL,
+        subject_id Subject.id%type,
+        class_Id Class.id%type DEFAULT NULL
     ) RETURN NUMBER AS
-        test_id NUMBER;
+        exam_id Exam.id%TYPE;
     BEGIN
         -- Insert the test record into the Exam table
         INSERT INTO Exam (title, exam_date, subject_id)
-        VALUES (title, test_date, subject_id)
-        RETURNING id INTO test_id;
+        VALUES (title, exam_date , subject_id)
+        RETURNING id INTO exam_id;
 
         -- If an examiner_id is provided, add the examiner as a participant
         IF examiner_id IS NOT NULL THEN
-            AddParticipants(test_id, NULL, examiner_id, 1);
+            AddParticipants(exam_id, NULL, examiner_id, 1);
         END IF;
 
         -- If a class_id is provided, add the class as a participant
         IF class_id IS NOT NULL THEN
-            AddParticipants(test_id, class_id, NULL, NULL);
+            AddParticipants(exam_id, class_id, NULL, NULL);
         END IF;
 
-        -- Return the test_id
-        RETURN test_id;
-    END CreateTest;
+        -- Return the exam_id
+        RETURN exam_id;
+    END CreateExam;
 
     -- CRUD operations for Subject, Class, Person, Competence, RoomType, Room, ExamRole, Exam, and Participant go here
 
@@ -469,7 +469,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     FUNCTION CreateSubject(
         name VARCHAR2
     ) RETURN NUMBER AS
-        subject_id NUMBER;
+        subject_id Subject.id%type;
     BEGIN
         -- Insert a new subject record into the Subject table
         INSERT INTO Subject (name)
@@ -518,9 +518,9 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     -- CRUD operations for Class
     FUNCTION CreateClass(
         name VARCHAR2,
-        subject_id NUMBER
+        subject_id Subject.id%type
     ) RETURN NUMBER AS
-        class_id NUMBER;
+        class_Id Class.id%type;
     BEGIN
         -- Insert a new class record into the Class table
         INSERT INTO Class (name, id)
@@ -547,7 +547,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     PROCEDURE UpdateClass(
         old_name VARCHAR2,
         new_name VARCHAR2,
-        subject_id NUMBER
+        subject_id Subject.id%type
     ) AS
     BEGIN
         -- Update the class record based on the old name
@@ -572,7 +572,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         first_name VARCHAR2,
         last_name VARCHAR2
     ) RETURN NUMBER AS
-        person_id NUMBER;
+        person_id Person.id%type;
     BEGIN
         -- Insert a new person record into the Person table
         INSERT INTO Person (firstname, lastname)
@@ -641,7 +641,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     FUNCTION CreateCompetenceWithPerson(
         description VARCHAR2,
-        person_id NUMBER
+        person_id Person.id%type
     ) RETURN NUMBER AS
         competence_id NUMBER;
     BEGIN
@@ -655,8 +655,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     FUNCTION CREATECOMPETENCEWITHPERSONANDSUBJECT(
         description VARCHAR2,
-        person_id NUMBER,
-        subject_id NUMBER
+        person_id Person.id%type,
+        subject_id Subject.id%type
     ) RETURN NUMBER AS
         competence_id NUMBER;
     BEGIN
@@ -685,8 +685,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     PROCEDURE UpdateCompetence(
         old_description VARCHAR2,
         new_description VARCHAR2,
-        person_id NUMBER,
-        subject_id NUMBER
+        person_id Person.id%type,
+        subject_id Subject.id%type
     ) AS
     BEGIN
         -- Update the competence record based on the description, person_id, and subject_id
@@ -709,7 +709,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     -- CRUD operations for RoomType
     FUNCTION CreateRoomType(
-        room_type VARCHAR2
+        room_type RoomType.id%type
     ) RETURN NUMBER AS
         room_type_id NUMBER;
     BEGIN
@@ -722,8 +722,8 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END CreateRoomType;
 
     PROCEDURE UpdateRoomType(
-        old_room_type VARCHAR2,
-        new_room_type VARCHAR2
+        old_room_type RoomType.id%type,
+        new_room_type RoomType.id%type
     ) AS
     BEGIN
         -- Update the room type record based on the room type
@@ -733,7 +733,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END UpdateRoomType;
 
     PROCEDURE DeleteRoomType(
-        room_type VARCHAR2
+        room_type RoomType.id%type
     ) AS
     BEGIN
         -- Delete the room type record based on the room type
@@ -747,7 +747,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         designation VARCHAR2,
         room_type_id NUMBER
     ) RETURN NUMBER AS
-        room_id NUMBER;
+        room_id Room.id%type;
     BEGIN
         -- Insert a new room record into the Room table
         INSERT INTO Room (designation, type_id)
@@ -772,7 +772,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END READROOMBYDESIGNATION;
 
     PROCEDURE UpdateRoom(
-        old_room_id NUMBER,
+        old_room_id Room.id%type,
         new_room_type_id NUMBER
     ) AS
     BEGIN
@@ -783,7 +783,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END UpdateRoom;
 
     PROCEDURE DeleteRoom(
-        room_id NUMBER
+        room_id Room.id%type
     ) AS
     BEGIN
         -- Delete the room record based on the room number
@@ -843,10 +843,10 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     -- CRUD operations for Exam
     FUNCTION CreateExam(
-        title VARCHAR2,
+        title Exam.title%type,
         exam_date TIMESTAMP,
-        subject_id NUMBER,
-        room_id NUMBER DEFAULT NULL
+        subject_id Subject.id%type,
+        room_id Room.id%type DEFAULT NULL
     ) RETURN NUMBER AS
         exam_id NUMBER;
     BEGIN
@@ -860,10 +860,10 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     PROCEDURE UpdateExam(
         exam_id NUMBER,
-        title VARCHAR2,
+        title Exam.title%type,
         exam_date TIMESTAMP,
-        subject_id NUMBER,
-        room_id NUMBER DEFAULT NULL
+        subject_id Subject.id%type,
+        room_id Room.id%type DEFAULT NULL
     ) AS
     BEGIN
         -- Update the exam record based on the exam ID
@@ -888,7 +888,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     -- CRUD operations for Participant
     PROCEDURE CreateParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER,
         score NUMBER DEFAULT NULL
     ) AS
@@ -900,7 +900,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     FUNCTION ReadParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER
     ) RETURN PARTICIPANT%rowtype AS
         participant_record PARTICIPANT%rowtype;
@@ -918,7 +918,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     PROCEDURE UpdateParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER,
         score NUMBER
     ) AS
@@ -933,7 +933,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     PROCEDURE DeleteParticipant(
         exam_id NUMBER,
-        person_id NUMBER,
+        person_id Person.id%type,
         exam_role_id NUMBER
     ) AS
     BEGIN
