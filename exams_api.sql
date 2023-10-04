@@ -221,13 +221,6 @@ CREATE OR REPLACE PACKAGE exams_manager AS
         role_name VARCHAR2
     );
 
-    -- CRUD for Exam
-    FUNCTION CreateExam(
-        title Exam.title%type,
-        exam_date TIMESTAMP,
-        subject_id Subject.id%type,
-        room_id Room.id%type DEFAULT NULL
-    ) RETURN NUMBER;
 
     PROCEDURE UpdateExam(
         exam_id NUMBER,
@@ -355,7 +348,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE pe.id = student_id
           AND t.EXAM_DATE BETWEEN TO_TIMESTAMP('2023-09-11 10:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('2024-09-11 11:00:00', 'YYYY-MM-DD HH24:MI:SS');
 
-        RETURN 0;
+        RETURN avg_score;
     END CalculateGradeAverage;
 
     FUNCTION GetTestResults(
@@ -957,24 +950,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         WHERE role = role_name;
     END DeleteExamRole;
 
-    -- CRUD operations for Exam
-    FUNCTION
-        CreateExam(
-        title Exam.title%type,
-        exam_date TIMESTAMP,
-        subject_id Subject.id%type,
-        room_id Room.id%type DEFAULT NULL
-    )
-        RETURN NUMBER AS
-        exam_id NUMBER;
-    BEGIN
-        -- Insert a new exam record into the Exam table
-        INSERT INTO Exam (title, exam_date, subject_id, room_id)
-        VALUES (title, exam_date, subject_id, room_id)
-        RETURNING id INTO exam_id;
 
-        RETURN exam_id;
-    END CreateExam;
 
     PROCEDURE
         UpdateExam(
