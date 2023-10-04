@@ -29,8 +29,8 @@ INSERT INTO Competence (id, description, person_id, subject_id) VALUES (5, 'Chem
 INSERT INTO Competence (id, description, person_id, subject_id) VALUES (6, 'Physiklehrer', 6, 6);
 
 -- Raumtypen
-INSERT INTO RoomType (id, type) VALUES (1, 'Klassenzimmer');
-INSERT INTO RoomType (id, type) VALUES (2, 'EDV-Saal');
+INSERT INTO RoomType (id, ROOM_TYPE) VALUES (1, 'Klassenzimmer');
+INSERT INTO RoomType (id, ROOM_TYPE) VALUES (2, 'EDV-Saal');
 
 -- Räume
 INSERT INTO Room (id, designation, type_id) VALUES (1, 'Raum 101', 1);
@@ -39,41 +39,40 @@ INSERT INTO Room (id, designation, type_id) VALUES (3, 'Raum 102', 1);
 INSERT INTO Room (id, designation, type_id) VALUES (4, 'EDV-Saal 2', 2);
 
 -- Rollen
-INSERT INTO TestRole (id, role) VALUES (1, 'Schüler');
-INSERT INTO TestRole (id, role) VALUES (2, 'Prüfer');
-INSERT INTO TestRole (id, role) VALUES (3, 'Aufsichtsperson');
+INSERT INTO EXAMROLE (id, role) VALUES (1, 'Schüler');
+INSERT INTO EXAMROLE (id, role) VALUES (2, 'Prüfer');
+INSERT INTO EXAMROLE (id, role) VALUES (3, 'Aufsichtsperson');
 
--- Tests
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (1, 'Mathe-Test', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (9, 'Mathe-Test', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (10, 'Mathe-Test', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (8, 'Mathe-Test', TO_TIMESTAMP('2024-05-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (7, 'Mathe-Test', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (2, 'Informatik-Test', TO_TIMESTAMP('2023-10-05 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (3, 'Biologie-Test', TO_TIMESTAMP('2023-10-10 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 3);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (4, 'Chemie-Test', TO_TIMESTAMP('2023-10-12 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 4);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (5, 'Physik-Test', TO_TIMESTAMP('2023-10-15 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 3);
-INSERT INTO Test (id, title, test_date, subject_id, room_id) VALUES (6, 'Physik-Test', TO_TIMESTAMP('2023-10-15 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 3);
+-- EXAMs
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (1, 'Mathe-EXAM', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (9, 'Mathe-EXAM', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (10, 'Mathe-EXAM', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (8, 'Mathe-EXAM', TO_TIMESTAMP('2024-05-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (7, 'Mathe-EXAM', TO_TIMESTAMP('2023-09-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (2, 'Informatik-EXAM', TO_TIMESTAMP('2023-10-05 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (3, 'Biologie-EXAM', TO_TIMESTAMP('2023-10-10 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 3);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (4, 'Chemie-EXAM', TO_TIMESTAMP('2023-10-12 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 4);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (5, 'Physik-EXAM', TO_TIMESTAMP('2023-10-15 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 3);
+INSERT INTO EXAM (id, title, EXAM_date, subject_id, room_id) VALUES (6, 'Physik-EXAM', TO_TIMESTAMP('2023-10-15 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6, 3);
 
 -- Teilnehmer
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (1, 1, 1, 85);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (1, 2, 1, 85);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (8, 5, 1, 100);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (7, 1, 1, 200);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (1, 2, 1, 92);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (1, 3, 2, NULL);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (2, 1, 2, NULL);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (3, 4, 1, 88);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (3, 5, 1, 90);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (4, 4, 2, NULL);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (4, 4, 1, 70);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (4, 6, 2, NULL);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (5, 5, 2, NULL);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (5, 5, 1, 100);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (5, 6, 2, NULL);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (5, 1, 1, 50);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (6, 2, 1, 50);
-INSERT INTO Participant (test_id, person_id, test_role_id, score) VALUES (9, 4, 1, 50);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (1, 1, 1, 85);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (1, 2, 1, 85);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (8, 5, 1, 100);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (7, 1, 1, 200);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (1, 3, 2, NULL);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (2, 1, 2, NULL);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (3, 4, 1, 88);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (3, 5, 1, 90);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (4, 4, 2, NULL);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (4, 4, 1, 70);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (4, 6, 2, NULL);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (5, 5, 2, NULL);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (5, 5, 1, 100);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (5, 6, 2, NULL);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (5, 1, 1, 50);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (6, 2, 1, 50);
+INSERT INTO Participant (EXAM_id, person_id, EXAM_role_id, score) VALUES (9, 4, 1, 50);
 
 
 commit;
