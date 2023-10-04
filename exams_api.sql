@@ -14,8 +14,8 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     -- Find-Available-Room: Finde einen Raum mit einer entsprechenden Raumart
     FUNCTION FindAvailableRoom(
-        room_type RoomType.id%type,
-        exam_date Exam.exam_date%type
+        new_room_type RoomType.id%type,
+        new_exam_date Exam.exam_date%type
     ) RETURN NUMBER;
 
     -- Grade-Student: Trage für einen Schüler eine Note ein
@@ -27,12 +27,12 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     -- Calculate-Grade-Average: Berechne für einen Schüler den Notendurchschnitt
     FUNCTION CalculateGradeAverage(
-        student_id Person.id%type
+        new_student_id Person.id%type
     ) RETURN NUMBER;
 
     -- Print-Test-Results: Drucke die Ergebnisse eines Tests
     FUNCTION GetTestResults(
-        exam_id Exam.id%TYPE
+        new_exam_id Exam.id%TYPE
     ) Return TestResultType;
 
     -- Print-Test-Results-For-Class-And-Subject: Drucke die Ergebnisse eines Tests für eine Klasse und ein Fach
@@ -262,7 +262,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         Select *
         into new_examiner
         from PERSON
-        where id = (SELECT pe.id
+        where id = (SELECT MAX(pe.id)
                     FROM Exam t
                              JOIN Competence c ON t.subject_id = c.subject_id
                              JOIN Person pe ON c.person_id = pe.id
@@ -272,20 +272,21 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END FindReplacementExaminer;
 
     FUNCTION FindAvailableRoom(
-        room_type RoomType.id%type,
-        exam_date Exam.exam_date%type
+        new_room_type RoomType.id%type,
+        new_exam_date Exam.exam_date%type
     ) RETURN NUMBER AS
         room_id Room.id%type;
     BEGIN
-        SELECT r.id
+        SELECT MAX(r.id)
         INTO room_id
         FROM Room r
                  JOIN RoomType rt ON r.type_id = rt.id
-        WHERE NOT EXISTS (SELECT 1
+        WHERE NOT EXISTS (SELECT *
                           FROM Exam t
                           WHERE t.room_id = r.id
-                            AND t.exam_date >= exam_date -- Use the parameter directly, no need to use TO_DATE
-                            AND t.exam_date < exam_date + INTERVAL '1' DAY);
+                            AND t.exam_date >= new_exam_date -- Use the parameter directly, no need to use TO_DATE
+                            AND t.exam_date < new_exam_date + INTERVAL '1' DAY)
+        AND rt.id = new_room_type;
 
         RETURN room_id;
     END FindAvailableRoom;
@@ -304,7 +305,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
     END GradeStudent;
 
     FUNCTION CalculateGradeAverage(
-        student_id Person.id%type
+        new_student_id Person.id%type
     ) RETURN NUMBER AS
         avg_score NUMBER;
     BEGIN
@@ -313,14 +314,15 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         FROM Participant p
                  JOIN Exam t ON p.exam_id = t.id
                  JOIN Person pe ON p.person_id = pe.id
-        WHERE pe.id = student_id
+        WHERE pe.id = new_student_id
           AND t.EXAM_DATE BETWEEN TO_TIMESTAMP('2023-09-11 10:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('2024-09-11 11:00:00', 'YYYY-MM-DD HH24:MI:SS');
 
         RETURN avg_score;
     END CalculateGradeAverage;
 
+
     FUNCTION GetTestResults(
-        exam_id Exam.id%TYPE
+        new_exam_id Exam.id%TYPE
     ) RETURN TestResultType AS
         testResult TestResultType;
     BEGIN
@@ -329,7 +331,7 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
         FROM Participant p
                  JOIN Exam t ON p.exam_id = t.id
                  JOIN Person pe ON p.person_id = pe.id
-        WHERE t.id = exam_id
+        WHERE t.id = new_exam_id
           AND p.score IS NOT NULL;
 
         RETURN testResult; -- Add this line to return the TestResultType object.
