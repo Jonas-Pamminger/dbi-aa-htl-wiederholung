@@ -23,22 +23,22 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     PROCEDURE GradeStudent(
         exam_id NUMBER,
-        person VARCHAR2,
+        person_name VARCHAR2,
         score NUMBER
     );
 
     FUNCTION CalculateGradeAverage(
-        class VARCHAR2
+        student_id organisation.Person.id%type
     ) RETURN NUMBER;
 
-    PROCEDURE ReserveRoom(
-        exam_id NUMBER,
-        room VARCHAR2
-    );
+    FUNCTION ReserveRoom(
+        exam_id organisation.Exam.id%type,
+        room_id organisation.Room.id%type
+    ) RETURN organisation.Room.id%type;
 
     PROCEDURE AscendClass(
-        class VARCHAR2,
-        new_class_name VARCHAR2
+        class_id organisation.Class.id%type,
+        new_class_name organisation.Class.name%type
     );
 END;
 /
@@ -106,16 +106,18 @@ BEGIN
         room_type VARCHAR2,
         exam_date TIMESTAMP
     ) RETURN NUMBER AS
+        room_type_id NUMBER;
         room_id NUMBER;
     BEGIN
+        SELECT id INTO room_type_id FROM organisation.RoomType WHERE type = room_type;
         SELECT r.id INTO room_id
         FROM organisation.Room r
                  JOIN organisation.RoomType rt ON r.type_id = rt.id
         WHERE NOT EXISTS (
             SELECT 1
             FROM organisation.Exam t
-            WHERE t.room_id = r.id
-              AND t.exam_date >= exam_date -- Use the parameter directly, no need to use TO_DATE
+            WHERE t.room_id = r.id AND r.type_id = room_type_id
+              AND t.exam_date >= exam_date
               AND t.exam_date < exam_date + INTERVAL '1' DAY
         );
 
@@ -124,47 +126,52 @@ BEGIN
 
     PROCEDURE GradeStudent(
         exam_id NUMBER,
-        person VARCHAR2,
+        person_name VARCHAR2,
         score NUMBER
     ) AS
         person_id NUMBER;
     BEGIN
-        SELECT id INTO person_id FROM organisation.Person WHERE (firstname || ' ' || lastname) = person;
+        SELECT id INTO person_id FROM organisation.Person WHERE (firstname || ' ' || lastname) = person_name;
         -- Insert the student's score into the Participant table
         UPDATE organisation.Participant p
-        SET score = score
+        SET p.score = score
         WHERE p.exam_id = exam_id AND p.person_id = person_id;
     END GradeStudent;
 
     FUNCTION CalculateGradeAverage(
-        class VARCHAR2
+       student_id organisation.Person.id%type
     ) RETURN NUMBER AS
         avg_score NUMBER;
     BEGIN
-        RETURN 0;
+        SELECT Round(AVG(p.score), 2)
+        INTO avg_score
+        FROM organisation.Participant p
+                 JOIN organisation.Exam t ON p.exam_id = t.id
+                 JOIN organisation.Person pe ON p.person_id = pe.id
+        WHERE pe.id = student_id
+          AND t.EXAM_DATE BETWEEN TO_TIMESTAMP('2023-09-11 10:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('2024-09-11 11:00:00', 'YYYY-MM-DD HH24:MI:SS');
+
+        RETURN avg_score;
     END CalculateGradeAverage;
 
-    PROCEDURE ReserveRoom(
-        exam_id NUMBER,
-        room VARCHAR2
-    ) AS
-        room_id NUMBER;
+    FUNCTION ReserveRoom(
+        exam_id organisation.Exam.id%type,
+        room_id organisation.Room.id%type
+    ) RETURN organisation.Room.id%type AS
+        res_room_id organisation.Room.id%type;
     BEGIN
-        SELECT id INTO room_id FROM organisation.Room where designation = room;
-        -- Update the Exam record to set the room_id
         UPDATE organisation.Exam
         SET room_id = room_id
-        WHERE id = exam_id;
+        WHERE id = exam_id RETURNING id INTO res_room_id;
+
+        RETURN res_room_id;
     END ReserveRoom;
 
     PROCEDURE AscendClass(
-        class VARCHAR2,
-        new_class_name VARCHAR2
+        class_id organisation.Class.id%type,
+        new_class_name organisation.Class.name%type
     ) AS
-        class_id NUMBER;
     BEGIN
-        SELECT id INTO class_id FROM organisation.Class WHERE name = class;
-        -- Update the Class record to change the class name
         UPDATE organisation.Class
         SET name = new_class_name
         WHERE id = class_id;
