@@ -33,13 +33,13 @@ CREATE OR REPLACE PACKAGE exams_manager AS
     -- Print-Test-Results: Drucke die Ergebnisse eines Tests
     FUNCTION GetTestResults(
         exam_id organisation.Exam.id%TYPE
-    ) Return organisation.TestResultType;
+    ) Return SYS_REFCURSOR;
 
     -- Print-Test-Results-For-organisation.Class-And-organisation.Subject: Drucke die Ergebnisse eines Tests für eine Klasse und ein Fach
     FUNCTION GetAverageTestResultsForSupjectsAndClass(
         class_name organisation.Class.name%type,
         subject_name organisation.Subject.name%type
-    ) RETURN organisation.TestResultType;
+    ) RETURN SYS_REFCURSOR;
 
     FUNCTION GetTestParticipantsAndRoles(
         examTitle organisation.Exam.TITLE%TYPE
@@ -321,46 +321,46 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     FUNCTION GetTestResults(
         exam_id organisation.Exam.id%TYPE
-    ) RETURN organisation.TestResultType AS
-        testResult organisation.TestResultType;
+    ) RETURN SYS_REFCURSOR AS
+        cur SYS_REFCURSOR;
     BEGIN
-        SELECT organisation.TestResultType(pe.firstname, pe.lastname, p.score)
-        INTO testResult
-        FROM organisation.Participant p
-                 JOIN organisation.Exam t ON p.exam_id = t.id
-                 JOIN organisation.Person pe ON p.person_id = pe.id
-        WHERE t.id = exam_id
-          AND p.score IS NOT NULL;
+        OPEN cur FOR
+            SELECT organisation.TestResultType(pe.firstname, pe.lastname, p.score)
+            FROM organisation.Participant p
+                     JOIN organisation.Exam t ON p.exam_id = t.id
+                     JOIN organisation.Person pe ON p.person_id = pe.id
+            WHERE t.id = exam_id
+              AND p.score IS NOT NULL;
 
-        RETURN testResult; -- Add this line to return the organisation.TestResultType object.
+        RETURN cur;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RETURN NULL; -- Handle the case where no data is found gracefully.
+            RETURN NULL;
     END GetTestResults;
 
-
-    FUNCTION GetAverageTestResultsForSupjectsAndClass(
+    FUNCTION GetAverageTestResultsForSubjectsAndClass(
         class_name organisation.Class.name%type,
         subject_name organisation.Subject.name%type
-    ) RETURN organisation.TestResultType AS
-        testResult organisation.TestResultType;
+    ) RETURN SYS_REFCURSOR AS
+        cur SYS_REFCURSOR;
     BEGIN
-        SELECT organisation.TestResultType(P2.FIRSTNAME, P2.LASTNAME, AVG(p.score))
-        INTO testResult
-        FROM organisation.Participant p
-                 JOIN organisation.Person P2 ON p.PERSON_ID = P2.ID
-                 JOIN organisation.Class C2 ON P2.CLASS_ID = C2.ID
-                 JOIN organisation.Exam T ON T.ID = p.exam_id
-                 JOIN organisation.Subject S2 ON T.SUBJECT_ID = S2.ID
-        WHERE C2.NAME = class_name
-          AND S2.NAME = subject_name
-        GROUP BY P2.FIRSTNAME, P2.LASTNAME;
+        OPEN cur FOR
+            SELECT organisation.TestResultType(P2.FIRSTNAME, P2.LASTNAME, AVG(p.score))
+            FROM organisation.Participant p
+                     JOIN organisation.Person P2 ON p.PERSON_ID = P2.ID
+                     JOIN organisation.Class C2 ON P2.CLASS_ID = C2.ID
+                     JOIN organisation.Exam T ON T.ID = p.exam_id
+                     JOIN organisation.Subject S2 ON T.SUBJECT_ID = S2.ID
+            WHERE C2.NAME = class_name
+              AND S2.NAME = subject_name
+            GROUP BY P2.FIRSTNAME, P2.LASTNAME;
 
-        return testResult;
+        RETURN cur;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RETURN NULL; -- Handle the case where no data is found gracefully.
-    END GetAverageTestResultsForSupjectsAndClass;
+            RETURN NULL;
+    END GetAverageTestResultsForSubjectsAndClass;
+
 
     FUNCTION GetTestParticipantsAndRoles(
         examTitle organisation.Exam.TITLE%TYPE
