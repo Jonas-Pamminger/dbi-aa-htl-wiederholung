@@ -43,7 +43,7 @@ CREATE OR REPLACE PACKAGE exams_manager AS
 
     FUNCTION GetTestParticipantsAndRoles(
         examTitle organisation.Exam.TITLE%TYPE
-    ) RETURN organisation.PersonRoleType;
+    ) RETURN SYS_REFCURSOR;
 
     FUNCTION GetAllTestForSubject(
         subject_name organisation.Subject.name%type
@@ -364,17 +364,18 @@ CREATE OR REPLACE PACKAGE BODY exams_manager AS
 
     FUNCTION GetTestParticipantsAndRoles(
         examTitle organisation.Exam.TITLE%TYPE
-    ) RETURN organisation.PersonRoleType AS
-        testResult organisation.PersonRoleType;
+    ) RETURN SYS_REFCURSOR AS
+        cur SYS_REFCURSOR;
     BEGIN
-        SELECT organisation.PersonRoleType(pe.firstname, pe.lastname, tr.role)
-        INTO testResult
-        FROM organisation.Participant p
-                 JOIN organisation.Exam t ON p.exam_id = t.id
-                 JOIN organisation.Person pe ON p.person_id = pe.id
-                 JOIN organisation.ExamRole tr ON p.EXAM_ROLE_ID = tr.id
-        WHERE t.title = examTitle;
-        return testResult;
+        OPEN cur FOR
+            SELECT organisation.PersonRoleType(pe.firstname, pe.lastname, tr.role)
+            FROM organisation.Participant p
+                     JOIN organisation.Exam t ON p.exam_id = t.id
+                     JOIN organisation.Person pe ON p.person_id = pe.id
+                     JOIN organisation.ExamRole tr ON p.EXAM_ROLE_ID = tr.id
+            WHERE t.title = examTitle;
+
+        RETURN cur;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
             RETURN NULL;
